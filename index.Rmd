@@ -1,7 +1,7 @@
 ---
 title: "Gov 50 Final Project"
 author: "Vanessa Iwuoha"
-description: "My final project: something related to education or social mobility in my city, Newark"
+description: "My final project: Newark Data"
 output:
   distill::distill_article:
     self_contained: false
