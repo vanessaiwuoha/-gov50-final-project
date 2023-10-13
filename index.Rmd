@@ -9,10 +9,25 @@ output:
 
 
 
-## Project thoughts
+## Milestone 1: Project thoughts
 
 I am interested in exploring data related to something related to education or social mobility in my city, Newark
 
 making a change to try and update html
+
+## Milestone 2
+
+1. What is the cause of starting differences in racial makeup and social mobility across different Newark wards?
+2. The cause of huge differences in racial population across different Newark wards may be a product of different immigrant groups.
+3. My variables of interests would be the different immigrant populations (by country/continent/region) in different zip codes/neighborhoods/wards in Newark. I would also look into the “Absolute Mobility at the 25th Percentile” measure by Raj Chetty.
+4. My outcome variable would be the “Absolute Mobility at the 25th Percentile” measure by Raj Chetty. It is the average rank of the children whose parents are at the 25 percentile in the income ranking. It is measured on a scale from 0 - 100.
+5. To support my hypothesis, I would have to see a high correlation between immigration and absolute mobility. A negative or positive correlation would detail whether certain populations have a “positive” or “negative effect” on absolute mobility. My hypothesis would be disproved if there was no correlation.
+
+
+
+```{r}
+#load the data 
+```
+
 
 
