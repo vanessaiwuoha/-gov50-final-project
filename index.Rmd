@@ -9,13 +9,13 @@ output:
 
 
 
-## Milestone 1: Project thoughts
+## Milestone 1: Create public GitHub repository
 
 I am interested in exploring data related to something related to education or social mobility in my city, Newark
 
 making a change to try and update html
 
-## Milestone 2
+## Milestone 2: Finding data and writing a proposal 
 
 1. What is the cause of starting differences in racial makeup and social mobility across different Newark wards?
 2. The cause of huge differences in racial population across different Newark wards may be a product of different immigrant groups.
@@ -26,7 +26,11 @@ making a change to try and update html
 
 
 ```{r}
-#load the data 
+#load raj chetty data 
+library(readr)
+tract_covariates <- read_csv("~/Library/Mobile Documents/com~apple~CloudDocs/Downloads/tract_covariates.csv")
+
+tract_outcomes_simple <- read_csv("~/Library/Mobile Documents/com~apple~CloudDocs/Downloads/tract_outcomes_simple.csv")
 ```
 
 
