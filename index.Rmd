@@ -26,6 +26,7 @@ making a change to try and update html
 
 
 ```{r}
+library(tidyverse)
 #load raj chetty data 
 library(readr)
 tract_covariates <- read_csv("~/Library/Mobile Documents/com~apple~CloudDocs/Downloads/tract_covariates.csv")
@@ -33,5 +34,66 @@ tract_covariates <- read_csv("~/Library/Mobile Documents/com~apple~CloudDocs/Dow
 tract_outcomes_simple <- read_csv("~/Library/Mobile Documents/com~apple~CloudDocs/Downloads/tract_outcomes_simple.csv")
 ```
 
+```{r}
+#combine the data 
+data <- tract_covariates |>
+  inner_join(tract_outcomes_simple) 
+```
+
+```{r}
+data_nj <- tract_covariates |>
+  inner_join(tract_outcomes_simple) |>
+  filter(state == 34) 
+  
+data_nj |>
+  count(czname) #why is it just those 3?? Need to relook at this data 
 
 
+```
+
+
+```{r}
+newark <- data_nj |>
+  filter(county == 13) |> #filter to just nj & essex county
+  filter(czname == "Newark") #filter to newark
+```
+
+
+## Milestone 3: One data visualization
+
+The next milestone will require that your Distill article loads the data you have selected and produces one interesting and polished data visualization. This could either show the distribution of one variable or the relationship between two variables.
+
+```{r}
+#plot mean household income in 2000 across nj
+
+social_mobility_nj <- data_nj |>
+  group_by(county) |>
+  mutate(mean_hinc_mean2000 = mean(hhinc_mean2000)) |>
+  ggplot(mapping = aes(x = county, y = mean_hinc_mean2000)) +
+  geom_point() +
+  labs(
+    x = "County Number",
+    y = "Mean Household Income (2000)"
+  )
+
+social_mobility_nj
+```
+
+```{r}
+
+library(scales)
+
+#mean household income in 2000 vs single parent share in newark
+
+plot <- newark |>
+  ggplot(
+    mapping = aes(x = singleparent_share2000, y = hhinc_mean2000)) +
+  geom_point() +
+  labs(
+    x = "Single Parent Share (2000)",
+    y = "Mean Household Income (2000)"
+    ) +
+  scale_y_continuous(labels = comma)
+
+plot #these numbers are deifinetly WAY TOO BIG, not sure why
+```
