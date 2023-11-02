@@ -95,5 +95,5 @@ plot <- newark |>
     ) +
   scale_y_continuous(labels = comma)
 
-plot #these numbers are deifinetly WAY TOO BIG, not sure why
+plot #these numbers are definetly WAY TOO BIG, not sure why
 ```
