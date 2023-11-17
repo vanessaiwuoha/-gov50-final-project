@@ -97,3 +97,26 @@ plot <- newark |>
 
 plot #these numbers are definitely WAY TOO BIG, not sure why
 ```
+
+
+## Milestone 4: Add results from one analysis 
+
+By this time, your article should contain one visualization and one analysis that attempts to answer your research question. There does not need to be a long discussion, but the results should be presented in either a second visualization or a nicely formatted table.
+
+
+```{r}
+#mean household income in 2000 vs single parent share in newark
+
+plot <- newark |>
+  ggplot(
+    mapping = aes(x = singleparent_share2000, y = hhinc_mean2000)) +
+  geom_point() +
+  labs(
+    x = "Single Parent Share (2000)",
+    y = "Mean Household Income (2000)"
+    ) +
+  scale_y_continuous(labels = comma)
+```
+
+Analysis: There is a clear link between single parent share and mean household income. 
+
