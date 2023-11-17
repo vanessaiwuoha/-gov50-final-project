@@ -107,7 +107,7 @@ By this time, your article should contain one visualization and one analysis tha
 ```{r}
 #mean household income in 2000 vs single parent share in newark
 
-plot <- newark |>
+plot2 <- newark |>
   ggplot(
     mapping = aes(x = singleparent_share2000, y = hhinc_mean2000)) +
   geom_point() +
@@ -115,8 +115,11 @@ plot <- newark |>
     x = "Single Parent Share (2000)",
     y = "Mean Household Income (2000)"
     ) +
-  scale_y_continuous(labels = comma)
+  scale_y_continuous(labels = comma) +
+  geom_smooth(method=lm) 
+
+plot2
 ```
 
-Analysis: There is a clear link between single parent share and mean household income. 
+Analysis: There is a clear link between single parent share and mean household income, with a higher single parent share being correlated with a lower average household income
 
