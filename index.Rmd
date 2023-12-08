@@ -29,9 +29,17 @@ making a change to try and update html
 library(tidyverse)
 #load raj chetty data 
 library(readr)
-tract_covariates <- read_csv("~/Library/Mobile Documents/com~apple~CloudDocs/Downloads/tract_covariates.csv")
 
+#delete these two
+tract_covariates <- read_csv("~/Library/Mobile Documents/com~apple~CloudDocs/Downloads/tract_covariates.csv")
 tract_outcomes_simple <- read_csv("~/Library/Mobile Documents/com~apple~CloudDocs/Downloads/tract_outcomes_simple.csv")
+
+#ec50 data 
+atlas <- read_dta("~/Downloads/atlas.dta")
+
+#social capital data 
+social_capital <- read_csv("~/Downloads/social_capital_zip.csv")
+
 ```
 
 ```{r}
