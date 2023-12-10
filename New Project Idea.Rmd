@@ -18,3 +18,56 @@ atlas <- read_dta("~/Downloads/atlas.dta")
 social_capital <- read_csv("~/Downloads/social_capital_zip.csv")
 
 ```
+
+
+#Filter the data by wards (atlas data)
+Make the wards seperately then combine !
+```{r}
+#filtering the atlas data 
+row_numbers <- grepl(pattern = "Newark, NJ", x = atlas$tract_name)
+Newark_with_East <- subset(x = atlas, subset = row_numbers)
+east_newark_rows <- grepl(pattern = "East Newark, NJ", x = Newark_with_East$tract_name)
+newark <- subset(x = Newark_with_East, subset = !east_newark_rows)
+
+#separation by the ward
+newark |>
+  mutate(
+    wards = case_when(
+      tract_name %in% c("Forest Hill, Newark, NJ", "Lower Roseville, Newark, NJ", "Upper Roseville, Newark, NJ", "Mount Pleasant/Lower Broadway, Newark, NJ", "North Broadway, Newark, NJ", "Seventh Avenue, Newark, NJ") ~ "North",
+      
+      tract_name %in% c("Upper Clinton Hill, Newark, NJ", "Weequahic, Newark, NJ", "Dayton/Weequahic Park, Newark, NJ", "South Broad Street, Newark, NJ") ~ "South",
+      
+      tract_name %in% c("Fairmount, Newark, NJ", "Lower Vailsburg, Newark, NJ", "Upper Vailsburg, Newark, NJ", "West Side, Newark, NJ") ~ "West",
+      
+      tract_name %in% c("Ironbound District, Newark, NJ", "North Ironbound, Newark, NJ") ~ "East",
+      
+      tract_name %in% c("University Heights, Newark, NJ", "Springfield/Belmont, Newark, NJ", "Central Business District, Newark, NJ", "University Heights, Newark, NJ") ~ "Central", 
+    ))
+
+```
+
+
+#Filter the data by wards (atlas data)
+
+```{r}
+#filtering the social capital data
+newark_2 <- social_capital |>
+  filter(zip %in% c(7102, 7103, 7104, 7105, 7106, 7107, 7108, 7112, 7114))
+
+#separating by ward > through futher digging, i saw that one zipcode could contain many neighborhoods
+newark_2 |>
+  mutate(
+   wards = case_when( 
+      zip %in% c(7104, 7107) ~ "North",
+      zip %in% c(7112, 7108, 7114) ~ "South",
+      zip %in% c(7105) ~ "East",
+      zip %in% c(7106, 7103) ~ "West",
+      zip %in% c(7102) ~ "Central",
+    ))
+```
+
+#Combining the data 
+
+```{r}
+```
+
