@@ -1,0 +1,20 @@
+---
+title: "New Project Idea"
+author: "Vanessa Iwuoha"
+date: "2023-12-06"
+output: html_document
+---
+
+# Adding the data 
+
+```{r}
+library(tidyverse)
+#load raj chetty data
+
+#ec50 data 
+atlas <- read_dta("~/Downloads/atlas.dta")
+
+#social capital data
+social_capital <- read_csv("~/Downloads/social_capital_zip.csv")
+
+```
