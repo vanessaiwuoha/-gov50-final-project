@@ -30,7 +30,7 @@ east_newark_rows <- grepl(pattern = "East Newark, NJ", x = Newark_with_East$trac
 newark <- subset(x = Newark_with_East, subset = !east_newark_rows)
 
 #separation by the ward
-newark |>
+newark <- newark |>
   mutate(
     wards = case_when(
       tract_name %in% c("Forest Hill, Newark, NJ", "Lower Roseville, Newark, NJ", "Upper Roseville, Newark, NJ", "Mount Pleasant/Lower Broadway, Newark, NJ", "North Broadway, Newark, NJ", "Seventh Avenue, Newark, NJ") ~ "North",
