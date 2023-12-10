@@ -21,7 +21,7 @@ social_capital <- read_csv("~/Downloads/social_capital_zip.csv")
 
 
 #Filter the data by wards (atlas data)
-Make the wards seperately then combine !
+Make the wards separately then combine !
 ```{r}
 #filtering the atlas data 
 row_numbers <- grepl(pattern = "Newark, NJ", x = atlas$tract_name)
@@ -55,7 +55,7 @@ newark_2 <- social_capital |>
   filter(zip %in% c(7102, 7103, 7104, 7105, 7106, 7107, 7108, 7112, 7114))
 
 #separating by ward > through futher digging, i saw that one zipcode could contain many neighborhoods
-newark_2 |>
+newark_2 <- newark_2 |>
   mutate(
    wards = case_when( 
       zip %in% c(7104, 7107) ~ "North",
