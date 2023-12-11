@@ -46,6 +46,10 @@ social_capital <- read_csv("~/Downloads/social_capital_zip.csv")
 #combine the data 
 data <- tract_covariates |>
   inner_join(tract_outcomes_simple) 
+
+#combine the new data 
+data <- atlas |>
+  left_join(social_capital) #this seems to be the wrong join
 ```
 
 ```{r}
