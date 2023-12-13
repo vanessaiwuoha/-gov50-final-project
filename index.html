@@ -1547,17 +1547,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
-<p>Last semester, I researched social mobility in my hometown, Newark, New Jersey, using Raj Chetty’s data from Opportunity Insights. Through researching different variables amongst my city’s wards, or neighborhoods, I found that two had extremely opposite outcomes. The East Ward, with a majority white and Hispanic population, had the highest median income and social mobility rating. The Central Ward, on the other hand, has a majority Black population and has the social mobility score and second lowest median income. I also observed that there was a high correlation between both “foreign-born share,” residents born outside the U.S., and “single-parent share” on social mobility for the 25th percentile. (need for more background?)</p>
-<p>Those observations led me to my research question: Why is there a stark difference between the social mobility outcomes of two wards in Newark, the Central and East? From my preliminary data, I believe the discrepancy in the amount of foreign-born residents might be the cause of social mobility ratings, perhaps due to a stronger value of education or as a cause of the systematic racism faced by African-Americans over time. I also explore if there is a discrepancy between the two ward’s “economic connectedness,” (a measure of the connection between low and high income residents in an area) an element that Chetty argues is strongly tied to social mobility. This information is incredibly important to understand because Newark is a low-income, disadvantaged city, with a rich history and great potential. Despite numerous historical attempts at revitalization, many residents are living in poverty and the city is still performing poorly. I think this study is a great first to look into potential solutions by understanding why some populations are doing better than others and what lessons could be incorporated from that analysis.</p>
+<p>Last semester, I researched social mobility in my hometown, Newark, New Jersey, using Raj Chetty’s data from Opportunity Insights. Through researching different variables amongst my city’s wards, or neighborhoods, I found that two had extremely opposite outcomes. The East Ward, with a majority white and Hispanic population, had the highest median income and social mobility rating. The Central Ward, on the other hand, has a majority Black population and has the social mobility score and second lowest median income.</p>
+<p>Those observations led me to my research question: Why is there a stark difference between the social mobility outcomes of two wards in Newark, the Central and East? From my preliminary data, I believe the discrepancy in the amount of foreign-born residents might be the cause of social mobility ratings, perhaps due to differences in educational attainment. I also explore if there is a discrepancy between the two ward’s “economic connectedness,” (a measure of the connection between low and high income residents in an area) an element that Chetty argues is strongly tied to social mobility. This information is incredibly important to understand because Newark is a low-income, disadvantaged city, with a rich history and great potential. Despite numerous historical attempts at revitalization, many residents are living in poverty and the city is still performing poorly. I think this study is a great first to look into potential solutions by understanding why some populations are doing better than others and what lessons could be incorporated from that analysis.</p>
 <hr />
-<p>##Data section</p>
-<dl>
-<dt>2-3 paragraphs + plot visualizing main outcome of interest. (3pts)</dt>
-<dd>
-describe the observed differences between central and east ward
-</dd>
-</dl>
-<p>background data across Wards</p>
+<h2 id="data">Data</h2>
+<p>2-3 paragraphs + plot visualizing main outcome of interest. (3pts)</p>
+<p>:describe the observed differences between central and east ward</p>
+<p>Background Data Across Wards</p>
 <div class="layout-chunk" data-layout="l-body">
 <table style="width:100%;">
 <colgroup>
@@ -1650,7 +1646,7 @@ describe the observed differences between central and east ward
 </tbody>
 </table>
 </div>
-social capital data across Ward
+<p>Social Capital Data Across Wards</p>
 <div class="layout-chunk" data-layout="l-body">
 <table>
 <colgroup>
@@ -1722,12 +1718,18 @@ social capital data across Ward
 </tbody>
 </table>
 </div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+</div>
 <hr />
-<p>##Results section</p>
+<h2 id="results">Results</h2>
 <p>plot of main analysis + regression output + 2-3 paragraphs of description and interpretation of the plots and regression (including interpreting the main coefficient of interest and describing if it is statistically significant and if we should interpret it causally). This section could be longer if you choose to include additional analyses. (8pts)</p>
 <p>plot of main analysis</p>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+<p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
 </div>
 <p>regression output</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -1744,86 +1746,42 @@ social capital data across Ward
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">38.820</td>
-<td style="text-align: right;">1.943</td>
-<td style="text-align: right;">19.984</td>
+<td style="text-align: right;">33.854</td>
+<td style="text-align: right;">1.279</td>
+<td style="text-align: right;">26.468</td>
 <td style="text-align: right;">0.000</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">wardsEast</td>
-<td style="text-align: right;">4.924</td>
-<td style="text-align: right;">1.431</td>
-<td style="text-align: right;">3.442</td>
-<td style="text-align: right;">0.001</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">wardsNorth</td>
-<td style="text-align: right;">2.847</td>
-<td style="text-align: right;">0.924</td>
-<td style="text-align: right;">3.082</td>
-<td style="text-align: right;">0.002</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">wardsSouth</td>
-<td style="text-align: right;">1.392</td>
-<td style="text-align: right;">0.897</td>
-<td style="text-align: right;">1.551</td>
-<td style="text-align: right;">0.123</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">wardsWest</td>
-<td style="text-align: right;">0.080</td>
-<td style="text-align: right;">0.890</td>
-<td style="text-align: right;">0.090</td>
-<td style="text-align: right;">0.928</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">foreign_share2010</td>
-<td style="text-align: right;">14.919</td>
-<td style="text-align: right;">2.389</td>
-<td style="text-align: right;">6.245</td>
+<td style="text-align: right;">22.528</td>
+<td style="text-align: right;">2.699</td>
+<td style="text-align: right;">8.347</td>
 <td style="text-align: right;">0.000</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">singleparent_share2010</td>
-<td style="text-align: right;">-5.732</td>
-<td style="text-align: right;">1.651</td>
-<td style="text-align: right;">-3.471</td>
-<td style="text-align: right;">0.001</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">poor_share2010</td>
-<td style="text-align: right;">-5.414</td>
-<td style="text-align: right;">2.082</td>
-<td style="text-align: right;">-2.600</td>
-<td style="text-align: right;">0.010</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">jail_pooled_pooled_p25</td>
-<td style="text-align: right;">-65.344</td>
-<td style="text-align: right;">10.799</td>
-<td style="text-align: right;">-6.051</td>
+<td style="text-align: left;">share_black2010</td>
+<td style="text-align: right;">-6.199</td>
+<td style="text-align: right;">1.258</td>
+<td style="text-align: right;">-4.928</td>
 <td style="text-align: right;">0.000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">frac_coll_plus2010</td>
-<td style="text-align: right;">-2.383</td>
-<td style="text-align: right;">3.223</td>
-<td style="text-align: right;">-0.739</td>
-<td style="text-align: right;">0.461</td>
+<td style="text-align: right;">4.573</td>
+<td style="text-align: right;">3.440</td>
+<td style="text-align: right;">1.329</td>
+<td style="text-align: right;">0.186</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="layout-chunk" data-layout="l-body">
-
-</div>
 <hr />
-<p>##Conclusion section</p>
-<p>1 paragraph
-(i) summarizing results and assessing the extent to which you find support for your hypothesis;
-(ii) describing limitations of the analysis and threats to inference (missing data, confounding, etc),
-(iii) and stating how you could improve your analysis if you had more time/money.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis;</p>
+<ol start="2" type="i">
+<li><p>describing limitations of the analysis and threats to inference (missing data, confounding, etc),</p></li>
+<li><p>and stating how you could improve your analysis if you had more time/money.</p></li>
+</ol>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

@@ -254,5 +254,12 @@ foreign_on_single <- Newark |>
 #on sytematic racism
    cor(Newark$share_black2010, Newark$singleparent_share2010, use = "complete.obs") #0.4707044
    cor(Newark$share_black2010, Newark$jail_pooled_pooled_p25 , use = "complete.obs") #  0.6430772
+   
+cor(Newark$share_white2010, Newark$singleparent_share2010, use = "complete.obs") #-0.5488667
+ cor(Newark$share_white2010, Newark$jail_pooled_pooled_p25, use = "complete.obs") # -0.510052
+ 
+ cor(Newark$share_hisp2010, Newark$singleparent_share2010, use = "complete.obs") #-0.3158382
+ cor(Newark$share_hisp2010, Newark$jail_pooled_pooled_p25, use = "complete.obs") # - -0.5502905
+ 
 ```
 
