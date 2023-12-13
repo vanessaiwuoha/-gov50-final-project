@@ -68,26 +68,28 @@ Those observations led me to my research question: Why is there a stark differen
 
 ## Data 
 
-2-3 paragraphs + plot visualizing main outcome of interest. (3pts)
-
-:describe the observed differences between central and east ward
-
-Background Data Across Wards
+### Background Data Across Wards
 
 ```{r, echo = FALSE}
+library(kableExtra)
+
 #Background to compare variables and outcomes across 
 vars_interest <- Newark |>
   group_by(wards)|>
   filter(wards != "") |>
   summarize_at(
-    vars(kfr_pooled_pooled_p25, jail_pooled_pooled_p25, med_hhinc2016, foreign_share2010, singleparent_share2010, share_black2010, share_hisp2010, share_white2010, frac_coll_plus2010),
+    vars(kfr_pooled_pooled_p25, med_hhinc2016, foreign_share2010, singleparent_share2010, share_black2010, share_hisp2010, share_white2010, frac_coll_plus2010),
     mean)
 
-knitr::kable (vars_interest, col.names = c("Wards", "kfr pooled 25", "jail pooled 25", "Median Household Income 2016", "Foreign Share 2010", "Single Parent Share 2010", "Black Share 2010","Hispanic Share 2010", "White Share 2010", "Fraction with College Degree or More 2010"), digits = 2)
+kable (vars_interest, col.names = c("Wards", "Social Mobility", "Median Household Income 2016", "Foreign Share 2010", "Single Parent Share 2010", "Black Share 2010","Hispanic Share 2010", "White Share 2010", "Fraction with College Degree or More 2010"), digits = 2) |>
+  kable_styling(font_size = 10)
 
 ```
 
-Social Capital Data Across Wards
+All the data is collected from Chetty's Opportunity Insights. The chart above displays different variables and outcomes across the wards. From this table, we can see that the East ward has the highest foreign share, highest social mobility score, highest white share, and highest median income. The Central ward has the 2nd lowest median income, third highest black share, and 3rd lowest social mobility (there is some discrepancy between the central results here compared to EC50, due to the data set - to be explained in conclusions).
+
+
+### Social Capital Data Across Wards
 
 ```{r, echo = FALSE}
 social_capital_ward <- Newark |>
@@ -98,10 +100,14 @@ social_capital_ward <- Newark |>
 exposure_grp_mem_high_zip, volunteering_rate_zip),
     mean)
 
-knitr::kable (social_capital_ward, col.names = c("Wards", "High-type Economic Connectedness Calculated using Neighborhood Friends", "Economic Connectedness", "Economic Connectedness for High-SES Individuals", "Mean Exposure to High-SES Individuals for Low-SES Individuals", "Mean Exposure to high-SES Individuals for High-SES Individuals", "Volunteering Rate"), digits = 2)
+kable (social_capital_ward, col.names = c("Wards", "High-type Economic Connectedness Calculated using Neighborhood Friends", "Economic Connectedness", "Economic Connectedness for High-SES Individuals", "Mean Exposure to High-SES Individuals for Low-SES Individuals", "Mean Exposure to high-SES Individuals for High-SES Individuals", "Volunteering Rate"), digits = 2) |>
+  kable_styling(font_size = 10)
 
 ```
 
+This data shows the different measures for economic connectedness across the wards, this element is noted by Chetty to be highly correlated with social mobility. Here we see that there a quite a bit of NA's, but the East ward has the lowest economic connectedness score and the Central ward having the highest "Exposure to High-SES Individuals for Low-SES Individuals" score.
+
+### Share of College Graduates Across Wards (2010)
 
 ```{r, echo = FALSE}
 #college education by ward - trying to figure out
@@ -111,10 +117,11 @@ Newark |>
            geom_col() +
   labs(
     x = "Wards",
-    y = "Fraction of College Degree or Higher 2010",
-    title = "Share of College Graduates Across Wards (2010)"
+    y = "Fraction of College Degree or Higher 2010"
   )
 ```
+
+The bar plot shows the varying shares of college graduates across the wards with the East having the lowest share, the South having the highest share, and the Central ward having the 2nd lowest share.
 
 ------------------------------------------------------------------------
 
@@ -122,25 +129,29 @@ Newark |>
 
 plot of main analysis + regression output + 2-3 paragraphs of description and interpretation of the plots and regression (including interpreting the main coefficient of interest and describing if it is statistically significant and if we should interpret it causally). This section could be longer if you choose to include additional analyses. (8pts)
 
-
+### Correlation Between Foreign Share and Social Mobility (2010)
 
 ```{r, echo = FALSE}
 #plot of main analysis
-#plot of interest: there is a high correlation between foreign share and *kfr*
+#plot of interest: there is a high correlation between foreign share and social mobility
+
 Newark |>
   ggplot(mapping = aes(x = foreign_share2010, y = kfr_pooled_pooled_p25)) + 
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   labs(
     x = "Foreign Share 2010",
-    y = "Social Mobility",
-    title = "Correlation Between Foreign Share and Social Mobility (2010)"
+    y = "Social Mobility"
   ) 
 
-#how could i add correlation to the graph
+#how to show correlation number on the chart??
+cor(Newark$foreign_share2010, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #0.8285084
 
 ```
 
+This chart shows there is a strong correlation between foreign share and social mobility in Newark. This is interesting to think about considering that the East Ward has the highest foreign share as well as the highest social mobility scor, which we know is highly correlated.
+
+### Correlation Between Fraction of Population with College Degree and Social Mobility (2010)
 
 ```{r, echo = FALSE}
 #no correlation between frac college and social mobility 
@@ -150,13 +161,12 @@ Newark |>
   geom_smooth(method = "lm", se = FALSE) +
   labs(
     x = "Fraction of College Degree or Higher 2010",
-    y = "Social Mobility", 
-    title = "Correlation Between Fraction of Population with College Degree and Social Mobility (2010)"
+    y = "Social Mobility"
   ) 
 
 ```
 
-regression output
+### Regression Output 
 
 ```{r, echo = FALSE}
 #regression output
@@ -175,6 +185,9 @@ library(broom)
 ## Conclusion 
 
 1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis;
+
+RESULTS -> its more about 
+black and foreign share might be covriates for something else
 
 (ii) describing limitations of the analysis and threats to inference (missing data, confounding, etc),
 

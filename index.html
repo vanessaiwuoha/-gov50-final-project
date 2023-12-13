@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/figure-html5/unnamed-chunk-7-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.20/header-attrs.js","index_files/header-attrs-2.25/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/figure-html5/unnamed-chunk-7-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.20/header-attrs.js","index_files/header-attrs-2.25/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/kePrint-0.0.1/kePrint.js","index_files/lightable-0.0.1/lightable.css","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1498,6 +1498,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   <!--/radix_placeholder_distill-->
   <script src="index_files/header-attrs-2.25/header-attrs.js"></script>
+  <script src="index_files/kePrint-0.0.1/kePrint.js"></script>
+  <link href="index_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
   <script src="index_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="index_files/popper-2.6.0/popper.min.js"></script>
   <link href="index_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1551,226 +1553,446 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>Those observations led me to my research question: Why is there a stark difference between the social mobility outcomes of two wards in Newark, the Central and East? From my preliminary data, I believe the discrepancy in the amount of foreign-born residents might be the cause of social mobility ratings, perhaps due to differences in educational attainment. I also explore if there is a discrepancy between the two ward’s “economic connectedness,” (a measure of the connection between low and high income residents in an area) an element that Chetty argues is strongly tied to social mobility. This information is incredibly important to understand because Newark is a low-income, disadvantaged city, with a rich history and great potential. Despite numerous historical attempts at revitalization, many residents are living in poverty and the city is still performing poorly. I think this study is a great first to look into potential solutions by understanding why some populations are doing better than others and what lessons could be incorporated from that analysis.</p>
 <hr />
 <h2 id="data">Data</h2>
-<p>2-3 paragraphs + plot visualizing main outcome of interest. (3pts)</p>
-<p>:describe the observed differences between central and east ward</p>
-<p>Background Data Across Wards</p>
+<h3 id="background-data-across-wards">Background Data Across Wards</h3>
 <div class="layout-chunk" data-layout="l-body">
-<table style="width:100%;">
-<colgroup>
-<col style="width: 3%" />
-<col style="width: 6%" />
-<col style="width: 7%" />
-<col style="width: 14%" />
-<col style="width: 9%" />
-<col style="width: 12%" />
-<col style="width: 8%" />
-<col style="width: 9%" />
-<col style="width: 8%" />
-<col style="width: 20%" />
-</colgroup>
+<table class="table" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th style="text-align: left;">Wards</th>
-<th style="text-align: right;">kfr pooled 25</th>
-<th style="text-align: right;">jail pooled 25</th>
-<th style="text-align: right;">Median Household Income 2016</th>
-<th style="text-align: right;">Foreign Share 2010</th>
-<th style="text-align: right;">Single Parent Share 2010</th>
-<th style="text-align: right;">Black Share 2010</th>
-<th style="text-align: right;">Hispanic Share 2010</th>
-<th style="text-align: right;">White Share 2010</th>
-<th style="text-align: right;">Fraction with College Degree or More 2010</th>
+<tr>
+<th style="text-align:left;">
+Wards
+</th>
+<th style="text-align:right;">
+Social Mobility
+</th>
+<th style="text-align:right;">
+Median Household Income 2016
+</th>
+<th style="text-align:right;">
+Foreign Share 2010
+</th>
+<th style="text-align:right;">
+Single Parent Share 2010
+</th>
+<th style="text-align:right;">
+Black Share 2010
+</th>
+<th style="text-align:right;">
+Hispanic Share 2010
+</th>
+<th style="text-align:right;">
+White Share 2010
+</th>
+<th style="text-align:right;">
+Fraction with College Degree or More 2010
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">Central</td>
-<td style="text-align: right;">32.59</td>
-<td style="text-align: right;">0.04</td>
-<td style="text-align: right;">31030.33</td>
-<td style="text-align: right;">0.17</td>
-<td style="text-align: right;">0.70</td>
-<td style="text-align: right;">0.70</td>
-<td style="text-align: right;">0.18</td>
-<td style="text-align: right;">0.08</td>
-<td style="text-align: right;">0.20</td>
+<tr>
+<td style="text-align:left;">
+Central
+</td>
+<td style="text-align:right;">
+32.59
+</td>
+<td style="text-align:right;">
+31030.33
+</td>
+<td style="text-align:right;">
+0.17
+</td>
+<td style="text-align:right;">
+0.70
+</td>
+<td style="text-align:right;">
+0.70
+</td>
+<td style="text-align:right;">
+0.18
+</td>
+<td style="text-align:right;">
+0.08
+</td>
+<td style="text-align:right;">
+0.20
+</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">East</td>
-<td style="text-align: right;">48.20</td>
-<td style="text-align: right;">0.01</td>
-<td style="text-align: right;">45489.42</td>
-<td style="text-align: right;">0.58</td>
-<td style="text-align: right;">0.39</td>
-<td style="text-align: right;">0.07</td>
-<td style="text-align: right;">0.44</td>
-<td style="text-align: right;">0.41</td>
-<td style="text-align: right;">0.09</td>
+<tr>
+<td style="text-align:left;">
+East
+</td>
+<td style="text-align:right;">
+48.20
+</td>
+<td style="text-align:right;">
+45489.42
+</td>
+<td style="text-align:right;">
+0.58
+</td>
+<td style="text-align:right;">
+0.39
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+<td style="text-align:right;">
+0.44
+</td>
+<td style="text-align:right;">
+0.41
+</td>
+<td style="text-align:right;">
+0.09
+</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">North</td>
-<td style="text-align: right;">39.02</td>
-<td style="text-align: right;">0.03</td>
-<td style="text-align: right;">32764.55</td>
-<td style="text-align: right;">0.28</td>
-<td style="text-align: right;">0.61</td>
-<td style="text-align: right;">0.23</td>
-<td style="text-align: right;">0.66</td>
-<td style="text-align: right;">0.07</td>
-<td style="text-align: right;">0.11</td>
+<tr>
+<td style="text-align:left;">
+North
+</td>
+<td style="text-align:right;">
+39.02
+</td>
+<td style="text-align:right;">
+32764.55
+</td>
+<td style="text-align:right;">
+0.28
+</td>
+<td style="text-align:right;">
+0.61
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+<td style="text-align:right;">
+0.66
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+<td style="text-align:right;">
+0.11
+</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">South</td>
-<td style="text-align: right;">32.29</td>
-<td style="text-align: right;">0.06</td>
-<td style="text-align: right;">30405.47</td>
-<td style="text-align: right;">0.12</td>
-<td style="text-align: right;">0.71</td>
-<td style="text-align: right;">0.83</td>
-<td style="text-align: right;">0.13</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">0.11</td>
+<tr>
+<td style="text-align:left;">
+South
+</td>
+<td style="text-align:right;">
+32.29
+</td>
+<td style="text-align:right;">
+30405.47
+</td>
+<td style="text-align:right;">
+0.12
+</td>
+<td style="text-align:right;">
+0.71
+</td>
+<td style="text-align:right;">
+0.83
+</td>
+<td style="text-align:right;">
+0.13
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.11
+</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">West</td>
-<td style="text-align: right;">32.36</td>
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">31353.71</td>
-<td style="text-align: right;">0.16</td>
-<td style="text-align: right;">0.71</td>
-<td style="text-align: right;">0.84</td>
-<td style="text-align: right;">0.12</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">0.12</td>
+<tr>
+<td style="text-align:left;">
+West
+</td>
+<td style="text-align:right;">
+32.36
+</td>
+<td style="text-align:right;">
+31353.71
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+0.71
+</td>
+<td style="text-align:right;">
+0.84
+</td>
+<td style="text-align:right;">
+0.12
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+0.12
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Social Capital Data Across Wards</p>
+<p>All the data is collected from Chetty’s Opportunity Insights. The chart above displays different variables and outcomes across the wards. From this table, we can see that the East ward has the highest foreign share, highest social mobility score, highest white share, and highest median income. The Central ward has the 2nd lowest median income, third highest black share, and 3rd lowest social mobility (there is some discrepancy between the central results here compared to EC50, due to the data set - to be explained in conclusions).</p>
+<h3 id="social-capital-data-across-wards">Social Capital Data Across Wards</h3>
 <div class="layout-chunk" data-layout="l-body">
-<table>
-<colgroup>
-<col style="width: 2%" />
-<col style="width: 24%" />
-<col style="width: 7%" />
-<col style="width: 16%" />
-<col style="width: 21%" />
-<col style="width: 21%" />
-<col style="width: 6%" />
-</colgroup>
+<table class="table" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th style="text-align: left;">Wards</th>
-<th style="text-align: right;">High-type Economic Connectedness Calculated using Neighborhood Friends</th>
-<th style="text-align: right;">Economic Connectedness</th>
-<th style="text-align: right;">Economic Connectedness for High-SES Individuals</th>
-<th style="text-align: right;">Mean Exposure to High-SES Individuals for Low-SES Individuals</th>
-<th style="text-align: right;">Mean Exposure to high-SES Individuals for High-SES Individuals</th>
-<th style="text-align: right;">Volunteering Rate</th>
+<tr>
+<th style="text-align:left;">
+Wards
+</th>
+<th style="text-align:right;">
+High-type Economic Connectedness Calculated using Neighborhood Friends
+</th>
+<th style="text-align:right;">
+Economic Connectedness
+</th>
+<th style="text-align:right;">
+Economic Connectedness for High-SES Individuals
+</th>
+<th style="text-align:right;">
+Mean Exposure to High-SES Individuals for Low-SES Individuals
+</th>
+<th style="text-align:right;">
+Mean Exposure to high-SES Individuals for High-SES Individuals
+</th>
+<th style="text-align:right;">
+Volunteering Rate
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">Central</td>
-<td style="text-align: right;">0.79</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">1.28</td>
-<td style="text-align: right;">0.93</td>
-<td style="text-align: right;">1.36</td>
-<td style="text-align: right;">0.04</td>
+<tr>
+<td style="text-align:left;">
+Central
+</td>
+<td style="text-align:right;">
+0.79
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+1.28
+</td>
+<td style="text-align:right;">
+0.93
+</td>
+<td style="text-align:right;">
+1.36
+</td>
+<td style="text-align:right;">
+0.04
+</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">East</td>
-<td style="text-align: right;">0.53</td>
-<td style="text-align: right;">0.09</td>
-<td style="text-align: right;">0.94</td>
-<td style="text-align: right;">0.36</td>
-<td style="text-align: right;">0.81</td>
-<td style="text-align: right;">0.02</td>
+<tr>
+<td style="text-align:left;">
+East
+</td>
+<td style="text-align:right;">
+0.53
+</td>
+<td style="text-align:right;">
+0.09
+</td>
+<td style="text-align:right;">
+0.94
+</td>
+<td style="text-align:right;">
+0.36
+</td>
+<td style="text-align:right;">
+0.81
+</td>
+<td style="text-align:right;">
+0.02
+</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">North</td>
-<td style="text-align: right;">0.59</td>
-<td style="text-align: right;">0.11</td>
-<td style="text-align: right;">0.98</td>
-<td style="text-align: right;">0.52</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.02</td>
+<tr>
+<td style="text-align:left;">
+North
+</td>
+<td style="text-align:right;">
+0.59
+</td>
+<td style="text-align:right;">
+0.11
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+0.52
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+0.02
+</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">South</td>
-<td style="text-align: right;">0.59</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">0.98</td>
-<td style="text-align: right;">0.59</td>
-<td style="text-align: right;">1.01</td>
-<td style="text-align: right;">0.02</td>
+<tr>
+<td style="text-align:left;">
+South
+</td>
+<td style="text-align:right;">
+0.59
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+0.59
+</td>
+<td style="text-align:right;">
+1.01
+</td>
+<td style="text-align:right;">
+0.02
+</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">West</td>
-<td style="text-align: right;">0.65</td>
-<td style="text-align: right;">0.16</td>
-<td style="text-align: right;">1.01</td>
-<td style="text-align: right;">0.62</td>
-<td style="text-align: right;">1.03</td>
-<td style="text-align: right;">0.03</td>
+<tr>
+<td style="text-align:left;">
+West
+</td>
+<td style="text-align:right;">
+0.65
+</td>
+<td style="text-align:right;">
+0.16
+</td>
+<td style="text-align:right;">
+1.01
+</td>
+<td style="text-align:right;">
+0.62
+</td>
+<td style="text-align:right;">
+1.03
+</td>
+<td style="text-align:right;">
+0.03
+</td>
 </tr>
 </tbody>
 </table>
 </div>
+<p>This data shows the different measures for economic connectedness across the wards, this element is noted by Chetty to be highly correlated with social mobility. Here we see that there a quite a bit of NA’s, but the East ward has the lowest economic connectedness score and the Central ward having the highest “Exposure to High-SES Individuals for Low-SES Individuals” score.</p>
+<h3 id="share-of-college-graduates-across-wards-2010">Share of College Graduates Across Wards (2010)</h3>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
 </div>
+<p>The bar plot shows the varying shares of college graduates across the wards with the East having the lowest share, the South having the highest share, and the Central ward having the 2nd lowest share.</p>
 <hr />
 <h2 id="results">Results</h2>
 <p>plot of main analysis + regression output + 2-3 paragraphs of description and interpretation of the plots and regression (including interpreting the main coefficient of interest and describing if it is statistically significant and if we should interpret it causally). This section could be longer if you choose to include additional analyses. (8pts)</p>
-<p>plot of main analysis</p>
+<h3 id="correlation-between-foreign-share-and-social-mobility-2010">Correlation Between Foreign Share and Social Mobility (2010)</h3>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+<pre><code>[1] 0.8285084</code></pre>
 </div>
+<p>This chart shows there is a strong correlation between foreign share and social mobility in Newark. This is interesting to think about considering that the East Ward has the highest foreign share as well as the highest social mobility scor, which we know is highly correlated.</p>
+<h3 id="correlation-between-fraction-of-population-with-college-degree-and-social-mobility-2010">Correlation Between Fraction of Population with College Degree and Social Mobility (2010)</h3>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
 </div>
-<p>regression output</p>
+<h3 id="regression-output">Regression Output</h3>
 <div class="layout-chunk" data-layout="l-body">
 <table>
 <thead>
-<tr class="header">
-<th style="text-align: left;">term</th>
-<th style="text-align: right;">estimate</th>
-<th style="text-align: right;">std.error</th>
-<th style="text-align: right;">statistic</th>
-<th style="text-align: right;">p.value</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">33.854</td>
-<td style="text-align: right;">1.279</td>
-<td style="text-align: right;">26.468</td>
-<td style="text-align: right;">0.000</td>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+33.854
+</td>
+<td style="text-align:right;">
+1.279
+</td>
+<td style="text-align:right;">
+26.468
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">foreign_share2010</td>
-<td style="text-align: right;">22.528</td>
-<td style="text-align: right;">2.699</td>
-<td style="text-align: right;">8.347</td>
-<td style="text-align: right;">0.000</td>
+<tr>
+<td style="text-align:left;">
+foreign_share2010
+</td>
+<td style="text-align:right;">
+22.528
+</td>
+<td style="text-align:right;">
+2.699
+</td>
+<td style="text-align:right;">
+8.347
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">share_black2010</td>
-<td style="text-align: right;">-6.199</td>
-<td style="text-align: right;">1.258</td>
-<td style="text-align: right;">-4.928</td>
-<td style="text-align: right;">0.000</td>
+<tr>
+<td style="text-align:left;">
+share_black2010
+</td>
+<td style="text-align:right;">
+-6.199
+</td>
+<td style="text-align:right;">
+1.258
+</td>
+<td style="text-align:right;">
+-4.928
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">frac_coll_plus2010</td>
-<td style="text-align: right;">4.573</td>
-<td style="text-align: right;">3.440</td>
-<td style="text-align: right;">1.329</td>
-<td style="text-align: right;">0.186</td>
+<tr>
+<td style="text-align:left;">
+frac_coll_plus2010
+</td>
+<td style="text-align:right;">
+4.573
+</td>
+<td style="text-align:right;">
+3.440
+</td>
+<td style="text-align:right;">
+1.329
+</td>
+<td style="text-align:right;">
+0.186
+</td>
 </tr>
 </tbody>
 </table>
@@ -1778,11 +2000,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <hr />
 <h2 id="conclusion">Conclusion</h2>
 <p>1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis;</p>
+<p>RESULTS -&gt; its more about
+black and foreign share might be covriates for something else</p>
 <ol start="2" type="i">
 <li><p>describing limitations of the analysis and threats to inference (missing data, confounding, etc),</p></li>
 <li><p>and stating how you could improve your analysis if you had more time/money.</p></li>
 </ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
