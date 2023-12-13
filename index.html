@@ -1547,7 +1547,55 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="d-article">
 <h2 id="introduction">Introduction</h2>
 <div class="layout-chunk" data-layout="l-body">
-
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://haven.tidyverse.org'>haven</a></span><span class='op'>)</span></span>
+<span><span class='co'>#ec50 data </span></span>
+<span><span class='va'>atlas</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/read_dta.html'>read_dta</a></span><span class='op'>(</span><span class='st'>"~/Downloads/atlas.dta"</span><span class='op'>)</span> <span class='co'>#this has issues loading</span></span>
+<span><span class='co'>#social capital data</span></span>
+<span><span class='va'>social_capital</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"~/Downloads/social_capital_zip.csv"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#filtering the atlas data </span></span>
+<span><span class='va'>row_numbers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span>pattern <span class='op'>=</span> <span class='st'>"Newark, NJ"</span>, x <span class='op'>=</span> <span class='va'>atlas</span><span class='op'>$</span><span class='va'>tract_name</span><span class='op'>)</span></span>
+<span><span class='va'>Newark_with_East</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>atlas</span>, subset <span class='op'>=</span> <span class='va'>row_numbers</span><span class='op'>)</span></span>
+<span><span class='va'>east_newark_rows</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span>pattern <span class='op'>=</span> <span class='st'>"East Newark, NJ"</span>, x <span class='op'>=</span> <span class='va'>Newark_with_East</span><span class='op'>$</span><span class='va'>tract_name</span><span class='op'>)</span></span>
+<span><span class='va'>newark</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Newark_with_East</span>, subset <span class='op'>=</span> <span class='op'>!</span><span class='va'>east_newark_rows</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#separation by the ward</span></span>
+<span><span class='va'>newark</span> <span class='op'>&lt;-</span> <span class='va'>newark</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
+<span>    wards <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span></span>
+<span>      <span class='va'>tract_name</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Forest Hill, Newark, NJ"</span>, <span class='st'>"Lower Roseville, Newark, NJ"</span>, <span class='st'>"Upper Roseville, Newark, NJ"</span>, <span class='st'>"Mount Pleasant/Lower Broadway, Newark, NJ"</span>, <span class='st'>"North Broadway, Newark, NJ"</span>, <span class='st'>"Seventh Avenue, Newark, NJ"</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"North"</span>,</span>
+<span>      </span>
+<span>      <span class='va'>tract_name</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Upper Clinton Hill, Newark, NJ"</span>, <span class='st'>"Weequahic, Newark, NJ"</span>, <span class='st'>"Dayton/Weequahic Park, Newark, NJ"</span>, <span class='st'>"South Broad Street, Newark, NJ"</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"South"</span>,</span>
+<span>      </span>
+<span>      <span class='va'>tract_name</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Fairmount, Newark, NJ"</span>, <span class='st'>"Lower Vailsburg, Newark, NJ"</span>, <span class='st'>"Upper Vailsburg, Newark, NJ"</span>, <span class='st'>"West Side, Newark, NJ"</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"West"</span>,</span>
+<span>      </span>
+<span>      <span class='va'>tract_name</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Ironbound District, Newark, NJ"</span>, <span class='st'>"North Ironbound, Newark, NJ"</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"East"</span>,</span>
+<span>      </span>
+<span>      <span class='va'>tract_name</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"University Heights, Newark, NJ"</span>, <span class='st'>"Springfield/Belmont, Newark, NJ"</span>, <span class='st'>"Central Business District, Newark, NJ"</span>, <span class='st'>"University Heights, Newark, NJ"</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"Central"</span>, </span>
+<span>    <span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#Filter the data by wards (atlas data)</span></span>
+<span><span class='co'>#filtering the social capital data</span></span>
+<span><span class='va'>newark_2</span> <span class='op'>&lt;-</span> <span class='va'>social_capital</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>zip</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7102</span>, <span class='fl'>7103</span>, <span class='fl'>7104</span>, <span class='fl'>7105</span>, <span class='fl'>7106</span>, <span class='fl'>7107</span>, <span class='fl'>7108</span>, <span class='fl'>7112</span>, <span class='fl'>7114</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#separating by ward &gt; through futher digging, i saw that one zipcode could contain many neighborhoods</span></span>
+<span><span class='va'>newark_2</span> <span class='op'>&lt;-</span> <span class='va'>newark_2</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
+<span>   wards <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span> </span>
+<span>      <span class='va'>zip</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7104</span>, <span class='fl'>7107</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"North"</span>,</span>
+<span>      <span class='va'>zip</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7112</span>, <span class='fl'>7108</span>, <span class='fl'>7114</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"South"</span>,</span>
+<span>      <span class='va'>zip</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7105</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"East"</span>,</span>
+<span>      <span class='va'>zip</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7106</span>, <span class='fl'>7103</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"West"</span>,</span>
+<span>      <span class='va'>zip</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7102</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"Central"</span>,</span>
+<span>    <span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>#combining the data set </span></span>
+<span><span class='va'>Newark</span> <span class='op'>&lt;-</span> <span class='va'>newark</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>newark_2</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join_by.html'>join_by</a></span><span class='op'>(</span><span class='va'>wards</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
 </div>
 <p>Last semester, I researched social mobility in my hometown, Newark, New Jersey, using Raj Chetty’s data from Opportunity Insights. Through researching different variables amongst my city’s wards, or neighborhoods, I found that two had extremely opposite outcomes. The East Ward, with a majority white and Hispanic population, had the highest median income and social mobility rating. The Central Ward, on the other hand, has a majority Black population and has the social mobility score and second lowest median income.</p>
 <p>Those observations led me to my research question: Why is there a stark difference between the social mobility outcomes of two wards in Newark, the Central and East? From my preliminary data, I believe the discrepancy in the amount of foreign-born residents might be the cause of social mobility ratings, perhaps due to differences in educational attainment. I also explore if there is a discrepancy between the two ward’s “economic connectedness,” (a measure of the connection between low and high income residents in an area) an element that Chetty argues is strongly tied to social mobility. This information is incredibly important to understand because Newark is a low-income, disadvantaged city, with a rich history and great potential. Despite numerous historical attempts at revitalization, many residents are living in poverty and the city is still performing poorly. I think this study is a great first to look into potential solutions by understanding why some populations are doing better than others and what lessons could be incorporated from that analysis.</p>
@@ -1555,6 +1603,19 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="data">Data</h2>
 <h3 id="background-data-across-wards">Background Data Across Wards</h3>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://haozhu233.github.io/kableExtra/'>kableExtra</a></span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>vars_interest</span> <span class='op'>&lt;-</span> <span class='va'>Newark</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>wards</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>wards</span> <span class='op'>!=</span> <span class='st'>""</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>summarize_at</a></span><span class='op'>(</span></span>
+<span>    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>kfr_pooled_pooled_p25</span>, <span class='va'>med_hhinc2016</span>, <span class='va'>foreign_share2010</span>, <span class='va'>singleparent_share2010</span>, <span class='va'>share_black2010</span>, <span class='va'>share_hisp2010</span>, <span class='va'>share_white2010</span>, <span class='va'>frac_coll_plus2010</span><span class='op'>)</span>,</span>
+<span>    <span class='va'>mean</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span> <span class='op'>(</span><span class='va'>vars_interest</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Wards"</span>, <span class='st'>"Social Mobility"</span>, <span class='st'>"Median Household Income 2016"</span>, <span class='st'>"Foreign Share 2010"</span>, <span class='st'>"Single Parent Share 2010"</span>, <span class='st'>"Black Share 2010"</span>,<span class='st'>"Hispanic Share 2010"</span>, <span class='st'>"White Share 2010"</span>, <span class='st'>"Fraction with College Degree or More 2010"</span><span class='op'>)</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span>font_size <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></span></code></pre>
+</div>
 <table class="table" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1739,6 +1800,18 @@ West
 <p>All the data is collected from Chetty’s Opportunity Insights. The chart above displays different variables and outcomes across the wards. From this table, we can see that the East ward has the highest foreign share, highest social mobility score, highest white share, and highest median income. The Central ward has the 2nd lowest median income, third highest black share, and 3rd lowest social mobility (there is some discrepancy between the central results here compared to EC50, due to the data set - to be explained in conclusions).</p>
 <h3 id="social-capital-data-across-wards">Social Capital Data Across Wards</h3>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>social_capital_ward</span> <span class='op'>&lt;-</span> <span class='va'>Newark</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>wards</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>wards</span> <span class='op'>!=</span> <span class='st'>""</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise_all.html'>summarize_at</a></span><span class='op'>(</span></span>
+<span>    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>ec_zip</span>, <span class='va'>nbhd_ec_zip</span>, <span class='va'>ec_high_zip</span>, <span class='va'>exposure_grp_mem_zip</span>, </span>
+<span><span class='va'>exposure_grp_mem_high_zip</span>, <span class='va'>volunteering_rate_zip</span><span class='op'>)</span>,</span>
+<span>    <span class='va'>mean</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span> <span class='op'>(</span><span class='va'>social_capital_ward</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Wards"</span>, <span class='st'>"High-type Economic Connectedness Calculated using Neighborhood Friends"</span>, <span class='st'>"Economic Connectedness"</span>, <span class='st'>"Economic Connectedness for High-SES Individuals"</span>, <span class='st'>"Mean Exposure to High-SES Individuals for Low-SES Individuals"</span>, <span class='st'>"Mean Exposure to high-SES Individuals for High-SES Individuals"</span>, <span class='st'>"Volunteering Rate"</span><span class='op'>)</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span>font_size <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></span></code></pre>
+</div>
 <table class="table" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1887,6 +1960,16 @@ West
 <p>This data shows the different measures for economic connectedness across the wards, this element is noted by Chetty to be highly correlated with social mobility. Here we see that there a quite a bit of NA’s, but the East ward has the lowest economic connectedness score and the Central ward having the highest “Exposure to High-SES Individuals for Low-SES Individuals” score.</p>
 <h3 id="share-of-college-graduates-across-wards-2010">Share of College Graduates Across Wards (2010)</h3>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>Newark</span> <span class='op'>|&gt;</span></span>
+<span>   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>wards</span> <span class='op'>!=</span> <span class='st'>""</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>wards</span>, y <span class='op'>=</span> <span class='va'>frac_coll_plus2010</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>           <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Wards"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Fraction of College Degree or Higher 2010"</span></span>
+<span>  <span class='op'>)</span></span></code></pre>
+</div>
 <p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
 </div>
 <p>The bar plot shows the varying shares of college graduates across the wards with the East having the lowest share, the South having the highest share, and the Central ward having the 2nd lowest share.</p>
@@ -1895,33 +1978,43 @@ West
 <p>plot of main analysis + regression output + 2-3 paragraphs of description and interpretation of the plots and regression (including interpreting the main coefficient of interest and describing if it is statistically significant and if we should interpret it causally). This section could be longer if you choose to include additional analyses. (8pts)</p>
 <h3 id="correlation-between-foreign-share-and-social-mobility-2010">Correlation Between Foreign Share and Social Mobility (2010)</h3>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>Newark</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>foreign_share2010</span>, y <span class='op'>=</span> <span class='va'>kfr_pooled_pooled_p25</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Foreign Share 2010"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Social Mobility"</span></span>
+<span>  <span class='op'>)</span> </span></code></pre>
+</div>
+<img src="index_files/figure-html5/unnamed-chunk-5-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>Newark</span><span class='op'>$</span><span class='va'>foreign_share2010</span>, <span class='va'>Newark</span><span class='op'>$</span><span class='va'>kfr_pooled_pooled_p25</span>, use <span class='op'>=</span> <span class='st'>"complete.obs"</span><span class='op'>)</span> <span class='co'>#0.8285084</span></span></code></pre>
+</div>
 <pre><code>[1] 0.8285084</code></pre>
 </div>
-<p>This chart shows there is a strong correlation between foreign share and social mobility in Newark. This is interesting to think about considering that the East Ward has the highest foreign share as well as the highest social mobility scor, which we know is highly correlated.</p>
+<p>This chart shows there is a strong correlation between foreign share and social mobility in Newark. This is interesting to think about considering that the East Ward has the highest foreign share as well as the highest social mobility score, which we know is highly correlated.</p>
 <h3 id="correlation-between-fraction-of-population-with-college-degree-and-social-mobility-2010">Correlation Between Fraction of Population with College Degree and Social Mobility (2010)</h3>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
 </div>
+<p>Here, we see interestingly enough, the amount of college attainment is not at all correlated with social mobility.</p>
 <h3 id="regression-output">Regression Output</h3>
 <div class="layout-chunk" data-layout="l-body">
-<table>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
+<span>  <span class='va'>lm_1</span> <span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>kfr_pooled_pooled_p25</span> <span class='op'>~</span> <span class='va'>foreign_share2010</span> <span class='op'>+</span> <span class='va'>share_black2010</span> <span class='op'>+</span> <span class='va'>frac_coll_plus2010</span>, data <span class='op'>=</span> <span class='va'>Newark</span><span class='op'>)</span></span>
+<span>  </span>
+<span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/modelsummary/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>lm_1</span>, statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"s.e. = {std.error}"</span>, <span class='st'>"p = {p.value}"</span><span class='op'>)</span>, gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-term
 </th>
-<th style="text-align:right;">
-estimate
-</th>
-<th style="text-align:right;">
-std.error
-</th>
-<th style="text-align:right;">
-statistic
-</th>
-<th style="text-align:right;">
-p.value
+<th style="text-align:center;">
+ (1)
 </th>
 </tr>
 </thead>
@@ -1930,78 +2023,123 @@ p.value
 <td style="text-align:left;">
 (Intercept)
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 33.854
 </td>
-<td style="text-align:right;">
-1.279
+</tr>
+<tr>
+<td style="text-align:left;">
 </td>
-<td style="text-align:right;">
-26.468
+<td style="text-align:center;">
+s.e. = 1.279
 </td>
-<td style="text-align:right;">
-0.000
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 foreign_share2010
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 22.528
 </td>
-<td style="text-align:right;">
-2.699
+</tr>
+<tr>
+<td style="text-align:left;">
 </td>
-<td style="text-align:right;">
-8.347
+<td style="text-align:center;">
+s.e. = 2.699
 </td>
-<td style="text-align:right;">
-0.000
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 share_black2010
 </td>
-<td style="text-align:right;">
--6.199
+<td style="text-align:center;">
+−6.199
 </td>
-<td style="text-align:right;">
-1.258
+</tr>
+<tr>
+<td style="text-align:left;">
 </td>
-<td style="text-align:right;">
--4.928
+<td style="text-align:center;">
+s.e. = 1.258
 </td>
-<td style="text-align:right;">
-0.000
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 frac_coll_plus2010
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 4.573
 </td>
-<td style="text-align:right;">
-3.440
+</tr>
+<tr>
+<td style="text-align:left;">
 </td>
-<td style="text-align:right;">
-1.329
+<td style="text-align:center;">
+s.e. = 3.440
 </td>
-<td style="text-align:right;">
-0.186
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1.5px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1.5px">
+p = 0.186
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+165
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.728
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.723
 </td>
 </tr>
 </tbody>
 </table>
 </div>
+<p>The regression reveals that there is indeed a high impact of black share and foreign share with on social mobility. We also observe that these effects have a high statistical significance.</p>
 <hr />
 <h2 id="conclusion">Conclusion</h2>
 <p>1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis;</p>
 <p>RESULTS -&gt; its more about
-black and foreign share might be covriates for something else</p>
+black and foreign share might be counfounders for something else</p>
 <ol start="2" type="i">
 <li><p>describing limitations of the analysis and threats to inference (missing data, confounding, etc),</p></li>
 <li><p>and stating how you could improve your analysis if you had more time/money.</p></li>
