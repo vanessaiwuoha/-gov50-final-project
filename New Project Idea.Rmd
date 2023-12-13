@@ -14,6 +14,9 @@ library(tidyverse)
 #ec50 data 
 atlas <- read_dta("~/Downloads/atlas.dta")
 
+#data from opportunity insights
+
+
 #social capital data
 social_capital <- read_csv("~/Downloads/social_capital_zip.csv")
 
@@ -77,11 +80,12 @@ Newark <- newark |>
 #Look into variables to test (grouped by ward)
 
 ```{r}
-Newark |>
+background <- Newark |>
   group_by(wards)|>
   summarize_at(
-    vars(kfr_pooled_pooled_p25, med_hhinc1990, med_hhinc2016, hhinc_mean2000, frac_coll_plus2000, frac_coll_plus2010, foreign_share2010, share_black2010, share_hisp2010, share_white2010, gsmn_math_g3_2013, singleparent_share1990, singleparent_share2000, singleparent_share2010, emp2000, popdensity2000, popdensity2010),
+    vars(kfr_pooled_pooled_p25, med_hhinc1990, med_hhinc2016, hhinc_mean2000, frac_coll_plus2000, frac_coll_plus2010, foreign_share2010, share_black2010, share_hisp2010, share_white2010, gsmn_math_g3_2013, singleparent_share1990, singleparent_share2000, singleparent_share2010, emp2000, popdensity2000, popdensity2010, jail_pooled_pooled_p25 ),
     mean)
+background
 
 vars_interest <- Newark|>
   group_by(wards)|>
@@ -105,6 +109,7 @@ exposure_grp_mem_high_zip, volunteering_rate_zip),
  cor(Newark$foreign_share2010, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #0.8285084
  cor(Newark$foreign_share2010, Newark$singleparent_share2010, use = "complete.obs") #-0.5843314
  cor(Newark$foreign_share2010, Newark$ec_zip, use = "complete.obs") #-0.2888062
+ cor(Newark$foreign_share2010, Newark$jail_pooled_pooled_p25, use = "complete.obs") #-0.5725961
  
  cor(Newark$singleparent_share2010, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #-0.6393986
  cor(Newark$ec_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #-0.359715
@@ -114,17 +119,23 @@ exposure_grp_mem_high_zip, volunteering_rate_zip),
  cor(Newark$clustering_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #0.4364739
  cor(Newark$frac_coll_plus2010, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #0.003872987
  
+ #not sure why it doesnt work lol
  cor(Newark$fgsmn_math_g3_2013, Newark$kfr_pooled_pooled_p25, use = "complete.obs")
  cor(Newark$singleparent_share2010, Newark$fgsmn_math_g3_2013, use = "complete.obs")
  
  Newark|>
-   mean(gsmn_math_g3_2013, na.rm = TRUE)
-
+   count(gsmn_math_g3_2013)
+ 
+ Newark|>
+   mean(gsmn_math_g3_2013) #why is it NA??
+ 
 ```
 
 #Try a linear regression
 
 ```{r}
-lm(kfr_pooled_pooled_p25 ~ foreign_share2010 + singleparent_share2010, Data = Newark )
+
+  lm(kfr_pooled_pooled_p25 ~ foreign_share2010 + singleparent_share2010, Data = Newark )
+  
 ```
 
