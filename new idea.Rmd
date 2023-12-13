@@ -220,7 +220,7 @@ foreign_on_kfr <- Newark |>
   labs(
     x = "Foreign Share 2010",
     y = "KFR Pooled 25"
-  )
+  ) 
 
 foreign_on_jail <- Newark |>
   ggplot(mapping = aes(x = foreign_share2010, y = jail_pooled_pooled_p25)) + 
@@ -241,6 +241,4 @@ foreign_on_single <- Newark |>
   )
   
 ```
-
-
 

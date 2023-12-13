@@ -9,6 +9,57 @@ output:
 
 ## Introduction
 
+```{r, echo = FALSE}
+library(tidyverse)
+library(haven)
+#ec50 data 
+atlas <- read_dta("~/Downloads/atlas.dta") #this has issues loading
+#social capital data
+social_capital <- read_csv("~/Downloads/social_capital_zip.csv")
+
+#filtering the atlas data 
+row_numbers <- grepl(pattern = "Newark, NJ", x = atlas$tract_name)
+Newark_with_East <- subset(x = atlas, subset = row_numbers)
+east_newark_rows <- grepl(pattern = "East Newark, NJ", x = Newark_with_East$tract_name)
+newark <- subset(x = Newark_with_East, subset = !east_newark_rows)
+
+#separation by the ward
+newark <- newark |>
+  mutate(
+    wards = case_when(
+      tract_name %in% c("Forest Hill, Newark, NJ", "Lower Roseville, Newark, NJ", "Upper Roseville, Newark, NJ", "Mount Pleasant/Lower Broadway, Newark, NJ", "North Broadway, Newark, NJ", "Seventh Avenue, Newark, NJ") ~ "North",
+      
+      tract_name %in% c("Upper Clinton Hill, Newark, NJ", "Weequahic, Newark, NJ", "Dayton/Weequahic Park, Newark, NJ", "South Broad Street, Newark, NJ") ~ "South",
+      
+      tract_name %in% c("Fairmount, Newark, NJ", "Lower Vailsburg, Newark, NJ", "Upper Vailsburg, Newark, NJ", "West Side, Newark, NJ") ~ "West",
+      
+      tract_name %in% c("Ironbound District, Newark, NJ", "North Ironbound, Newark, NJ") ~ "East",
+      
+      tract_name %in% c("University Heights, Newark, NJ", "Springfield/Belmont, Newark, NJ", "Central Business District, Newark, NJ", "University Heights, Newark, NJ") ~ "Central", 
+    ))
+
+#Filter the data by wards (atlas data)
+#filtering the social capital data
+newark_2 <- social_capital |>
+  filter(zip %in% c(7102, 7103, 7104, 7105, 7106, 7107, 7108, 7112, 7114))
+
+#separating by ward > through futher digging, i saw that one zipcode could contain many neighborhoods
+newark_2 <- newark_2 |>
+  mutate(
+   wards = case_when( 
+      zip %in% c(7104, 7107) ~ "North",
+      zip %in% c(7112, 7108, 7114) ~ "South",
+      zip %in% c(7105) ~ "East",
+      zip %in% c(7106, 7103) ~ "West",
+      zip %in% c(7102) ~ "Central",
+    ))
+
+#combine 
+Newark <- newark |>
+  left_join(newark_2, join_by(wards))
+
+```
+
 Last semester, I researched social mobility in my hometown, Newark, New Jersey, using Raj Chetty’s data from Opportunity Insights. Through researching different variables amongst my city’s wards, or neighborhoods, I found that two had extremely opposite outcomes. The East Ward, with a majority white and Hispanic population, had the highest median income and social mobility rating. The Central Ward, on the other hand, has a majority Black population and has the social mobility score and second lowest median income. I also observed that there was a high correlation between both “foreign-born share,” residents born outside the U.S., and “single-parent share” on social mobility for the 25th percentile. (need for more background?) 
 
 Those observations led me to my research question: Why is there a stark difference between the social mobility outcomes of two wards in Newark, the Central and East? From my preliminary data, I believe the discrepancy in the amount of foreign-born residents might be the cause of social mobility ratings, perhaps due to a stronger value of education or as a cause of the systematic racism faced by African-Americans over time. I also explore if there is a discrepancy between the two ward’s “economic connectedness,” (a measure of the connection between low and high income residents in an area) an element that Chetty argues is strongly tied to social mobility. This information is incredibly important to understand because Newark is a low-income, disadvantaged city, with a rich history and great potential. Despite numerous historical attempts at revitalization, many residents are living in poverty and the city is still performing poorly. I think this study is a great first to look into potential solutions by understanding why some populations are doing better than others and what lessons could be incorporated from that analysis. 
@@ -19,7 +70,19 @@ Those observations led me to my research question: Why is there a stark differen
 
 2-3 paragraphs + plot visualizing main outcome of interest. (3pts)
 
-```{r}
+```{r, echo = FALSE}
+
+#plot of interest: there is a high correlation between foreign share and *kfr*
+Newark |>
+  ggplot(mapping = aes(x = foreign_share2010, y = kfr_pooled_pooled_p25)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "Foreign Share 2010",
+    y = "*KFR* Pooled 25"
+  ) 
+
+#how could i add correlation to the graph
 ```
 
 ---
