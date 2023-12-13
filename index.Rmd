@@ -1,7 +1,7 @@
 ---
 title: "Gov 50 Final Project"
 author: "Vanessa Iwuoha"
-description: "My final project: Newark Data"
+description: "My final project: Exploring the stark Social Mobility discrepancies between with two Newark Wards: East and Central"
 output:
   distill::distill_article:
     self_contained: false
