@@ -1,0 +1,246 @@
+---
+title: "New Project Idea"
+author: "Vanessa Iwuoha"
+date: "2023-12-06"
+output: html_document
+---
+
+# Adding the data 
+
+```{r}
+library(tidyverse)
+library(haven)
+#load raj chetty data
+
+#ec50 data 
+atlas <- read_dta("~/Downloads/atlas.dta") #this has issues loading
+
+#social capital data
+social_capital <- read_csv("~/Downloads/social_capital_zip.csv")
+
+```
+
+
+#Filter the data by wards (atlas data)
+Make the wards separately then combine !
+```{r}
+#filtering the atlas data 
+row_numbers <- grepl(pattern = "Newark, NJ", x = atlas$tract_name)
+Newark_with_East <- subset(x = atlas, subset = row_numbers)
+east_newark_rows <- grepl(pattern = "East Newark, NJ", x = Newark_with_East$tract_name)
+newark <- subset(x = Newark_with_East, subset = !east_newark_rows)
+
+#separation by the ward
+newark <- newark |>
+  mutate(
+    wards = case_when(
+      tract_name %in% c("Forest Hill, Newark, NJ", "Lower Roseville, Newark, NJ", "Upper Roseville, Newark, NJ", "Mount Pleasant/Lower Broadway, Newark, NJ", "North Broadway, Newark, NJ", "Seventh Avenue, Newark, NJ") ~ "North",
+      
+      tract_name %in% c("Upper Clinton Hill, Newark, NJ", "Weequahic, Newark, NJ", "Dayton/Weequahic Park, Newark, NJ", "South Broad Street, Newark, NJ") ~ "South",
+      
+      tract_name %in% c("Fairmount, Newark, NJ", "Lower Vailsburg, Newark, NJ", "Upper Vailsburg, Newark, NJ", "West Side, Newark, NJ") ~ "West",
+      
+      tract_name %in% c("Ironbound District, Newark, NJ", "North Ironbound, Newark, NJ") ~ "East",
+      
+      tract_name %in% c("University Heights, Newark, NJ", "Springfield/Belmont, Newark, NJ", "Central Business District, Newark, NJ", "University Heights, Newark, NJ") ~ "Central", 
+    ))
+
+```
+
+
+#Filter the data by wards (atlas data)
+
+```{r}
+#filtering the social capital data
+newark_2 <- social_capital |>
+  filter(zip %in% c(7102, 7103, 7104, 7105, 7106, 7107, 7108, 7112, 7114))
+
+#separating by ward > through futher digging, i saw that one zipcode could contain many neighborhoods
+newark_2 <- newark_2 |>
+  mutate(
+   wards = case_when( 
+      zip %in% c(7104, 7107) ~ "North",
+      zip %in% c(7112, 7108, 7114) ~ "South",
+      zip %in% c(7105) ~ "East",
+      zip %in% c(7106, 7103) ~ "West",
+      zip %in% c(7102) ~ "Central",
+    ))
+```
+
+#Combining the data 
+
+```{r}
+#HELP - Did the combination work
+Newark <- newark |>
+  left_join(newark_2, join_by(wards))
+```
+
+#Look into variables to test (grouped by ward)
+
+```{r}
+first_check <- Newark |>
+  group_by(wards)|>
+  summarize_at(
+    vars(kfr_pooled_pooled_p25, med_hhinc1990, med_hhinc2016, hhinc_mean2000, frac_coll_plus2000, frac_coll_plus2010, foreign_share2010, share_black2010, share_hisp2010, share_white2010, gsmn_math_g3_2013, singleparent_share1990, singleparent_share2000, singleparent_share2010, emp2000, popdensity2000, popdensity2010, jail_pooled_pooled_p25 ),
+    mean)
+
+vars_interest <- Newark |>
+  group_by(wards)|>
+  summarize_at(
+    vars(kfr_pooled_pooled_p25, med_hhinc2016, hhinc_mean2000, frac_coll_plus2010, foreign_share2010, share_black2010, share_hisp2010, share_white2010, gsmn_math_g3_2013, singleparent_share2010, emp2000,jail_pooled_pooled_p25 ),
+    mean)
+vars_interest
+
+
+social_capital_ward <- Newark |>
+  group_by(wards) |>
+  summarize_at(
+    vars(ec_zip, nbhd_ec_zip, ec_high_zip, exposure_grp_mem_zip, 
+exposure_grp_mem_high_zip, volunteering_rate_zip),
+    mean)
+
+
+#correlations <- Newark |>
+  #group_by(wards) |>
+  #cor(foreign_share2010, kfr_pooled_pooled_p25, use = "complete.obs")
+  
+ cor(Newark$foreign_share2010, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #0.8285084
+ cor(Newark$foreign_share2010, Newark$singleparent_share2010, use = "complete.obs") #-0.5843314
+ cor(Newark$foreign_share2010, Newark$ec_zip, use = "complete.obs") #-0.2888062
+ cor(Newark$foreign_share2010, Newark$jail_pooled_pooled_p25, use = "complete.obs") #-0.5725961
+  cor(Newark$foreign_share2010, Newark$emp2000, use = "complete.obs") #0.3465099
+  cor(Newark$foreign_share2010, Newark$poor_share2010, use = "complete.obs") # -0.3796476
+ 
+ cor(Newark$singleparent_share2010, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #-0.6393986
+ cor(Newark$ec_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #-0.359715
+ cor(Newark$volunteering_rate_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #-0.3386356
+ cor(Newark$exposure_grp_mem_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #-0.5087451
+ cor(Newark$nbhd_ec_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #-0.3311841
+ cor(Newark$clustering_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #0.4364739
+ cor(Newark$frac_coll_plus2010, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #0.003872987
+cor(Newark$ec_high_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") # -0.1893304
+
+ 
+ #not sure why it doesnt work lol
+ cor(Newark$fgsmn_math_g3_2013, Newark$kfr_pooled_pooled_p25, use = "complete.obs")
+ cor(Newark$singleparent_share2010, Newark$fgsmn_math_g3_2013, use = "complete.obs")
+ 
+ Newark|>
+   count(gsmn_math_g3_2013)
+ 
+ Newark|>
+   mean(gsmn_math_g3_2013) #why is it NA??
+ 
+ #look at race
+ cor(Newark$share_black2010, Newark$poor_share2010, use = "complete.obs") #0.1434808
+ cor(Newark$share_black2010, Newark$singleparent_share2010, use = "complete.obs") #0.4707044
+ cor(Newark$share_black2010, Newark$jail_black_pooled_p25, use = "complete.obs") # 0.04999482
+ 
+ cor(Newark$share_white2010, Newark$poor_share2010, use = "complete.obs") #-0.2453565
+ cor(Newark$share_white2010, Newark$singleparent_share2010, use = "complete.obs") #-0.5488667
+ cor(Newark$share_white2010, Newark$jail_black_pooled_p25, use = "complete.obs") # 0.08108504
+ 
+ cor(Newark$share_hisp2010, Newark$poor_share2010, use = "complete.obs") #-0.05337429
+ cor(Newark$share_hisp2010, Newark$singleparent_share2010, use = "complete.obs") #-0.3158382
+ cor(Newark$share_hisp2010, Newark$jail_black_pooled_p25, use = "complete.obs") # -0.06535808
+ 
+ #redlining rating 
+ redline_score<- Newark |>
+  group_by(wards) |> 
+   summarize_at(vars(HOLC_A, HOLC_B, HOLC_C, HOLC_D), mean) #na for most
+ 
+ 
+```
+
+#Try a linear regression HELP!
+
+```{r}
+
+  lm(kfr_pooled_pooled_p25 ~ foreign_share2010 + singleparent_share2010, Data = Newark )
+
+Newark |>
+  count(kfr_pooled_pooled_p25)
+  
+```
+
+
+#bootstrap experiment 
+correlation between foreign share and social mobility 
+correlation between jail and blackshare
+
+```{r}
+```
+
+#final important visuals & stats for hw
+
+```{r}
+
+#Background to compare variables and outcomes across 
+vars_interest <- Newark |>
+  group_by(wards)|>
+  summarize_at(
+    vars(kfr_pooled_pooled_p25, jail_pooled_pooled_p25, med_hhinc2016, foreign_share2010, singleparent_share2010, share_black2010, share_hisp2010, share_white2010, frac_coll_plus2010),
+    mean)
+vars_interest <- vars_interest #HOW TO DELETE LAST ROW
+
+knitr::kable (vars_interest, col.names = c("Wards", "kfr pooled 25", "jail pooled 25", "Median Household Income 2016", "Foreign Share 2010", "Single Parent Share 2010", "Black Share 2010","Hispanic Share 2010", "White Share 2010", "Fraction with College Degree or More 2010"), digits = 2)
+
+#high correlation pairs
+ cor(Newark$foreign_share2010, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #0.8285084 GRAPH THIS 
+ cor(Newark$foreign_share2010, Newark$med_hhinc2016, use = "complete.obs") #0.443451
+ cor(Newark$foreign_share2010, Newark$singleparent_share2010, use = "complete.obs") #-0.5843314
+  cor(Newark$foreign_share2010, Newark$jail_pooled_pooled_p25, use = "complete.obs") #-0.5725961
+  cor(Newark$foreign_share2010, Newark$poor_share2010, use = "complete.obs") # -0.3796476
+ cor(Newark$singleparent_share2010, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #-0.6393986
+
+#Social capital stuff 
+social_capital_ward <- Newark |>
+  group_by(wards) |>
+  summarize_at(
+    vars(ec_zip, nbhd_ec_zip, ec_high_zip, exposure_grp_mem_zip, 
+exposure_grp_mem_high_zip, volunteering_rate_zip),
+    mean)
+
+#check for if social capital measures positively correlate with social mobility
+  cor(Newark$ec_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #-0.359715
+  cor(Newark$volunteering_rate_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #-0.3386356
+  cor(Newark$exposure_grp_mem_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #-0.5087451
+  cor(Newark$nbhd_ec_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #-0.3311841
+  cor(Newark$clustering_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #0.4364739
+  
+#there seems to be negative correlation between "Mean exposure to high-SES individuals for low-SES individuals" and social mobility
+
+  
+  
+#GRAPHS OF INTEREST
+foreign_on_kfr <- Newark |>
+  ggplot(mapping = aes(x = foreign_share2010, y = kfr_pooled_pooled_p25)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "Foreign Share 2010",
+    y = "KFR Pooled 25"
+  )
+
+foreign_on_jail <- Newark |>
+  ggplot(mapping = aes(x = foreign_share2010, y = jail_pooled_pooled_p25)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "Foreign Share 2010",
+    y = "Jail Pooled 25"
+  )
+
+foreign_on_single <- Newark |>
+  ggplot(mapping = aes(x = foreign_share2010, y = singleparent_share2010)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(
+    x = "Foreign Share 2010",
+    y = "Single Parent Share 2010"
+  )
+  
+```
+
+
+

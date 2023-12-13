@@ -7,131 +7,29 @@ output:
     self_contained: false
 ---
 
+## Introduction
+describe the research question and main hypothesis; describe why it is important.
 
 
-## Milestone 1: Create public GitHub repository
-
-I am interested in exploring data related to something related to education or social mobility in my city, Newark
-
-making a change to try and update html
-
-## Milestone 2: Finding data and writing a proposal 
-
-1. What is the cause of starting differences in racial makeup and social mobility across different Newark wards?
-2. The cause of huge differences in racial population across different Newark wards may be a product of different immigrant groups.
-3. My variables of interests would be the different immigrant populations (by country/continent/region) in different zip codes/neighborhoods/wards in Newark. I would also look into the “Absolute Mobility at the 25th Percentile” measure by Raj Chetty.
-4. My outcome variable would be the “Absolute Mobility at the 25th Percentile” measure by Raj Chetty. It is the average rank of the children whose parents are at the 25 percentile in the income ranking. It is measured on a scale from 0 - 100.
-5. To support my hypothesis, I would have to see a high correlation between immigration and absolute mobility. A negative or positive correlation would detail whether certain populations have a “positive” or “negative effect” on absolute mobility. My hypothesis would be disproved if there was no correlation.
-
-
+##Data section 
+2-3 paragraphs + plot visualizing main outcome of interest. (3pts)
 
 ```{r}
-library(tidyverse)
-#load raj chetty data 
-library(readr)
-
-#delete these two
-tract_covariates <- read_csv("~/Library/Mobile Documents/com~apple~CloudDocs/Downloads/tract_covariates.csv")
-tract_outcomes_simple <- read_csv("~/Library/Mobile Documents/com~apple~CloudDocs/Downloads/tract_outcomes_simple.csv")
-
-#ec50 data 
-atlas <- read_dta("~/Downloads/atlas.dta")
-
-#social capital data 
-social_capital <- read_csv("~/Downloads/social_capital_zip.csv")
-
-```
-
-```{r}
-#combine the data 
-data <- tract_covariates |>
-  inner_join(tract_outcomes_simple) 
-
-#combine the new data 
-data <- atlas |>
-  left_join(social_capital) #this seems to be the wrong join
-```
-
-```{r}
-data_nj <- tract_covariates |>
-  inner_join(tract_outcomes_simple) |>
-  filter(state == 34) 
-  
-data_nj |>
-  count(czname) #why is it just those 3?? Need to relook at this data 
-
-
 ```
 
 
+##Results section 
+plot of main analysis + regression output + 2-3 paragraphs of description and interpretation of the plots and regression (including interpreting the main coefficient of interest and describing if it is statistically significant and if we should interpret it causally). This section could be longer if you choose to include additional analyses. (8pts)
+
 ```{r}
-newark <- data_nj |>
-  filter(county == 13) |> #filter to just nj & essex county
-  filter(czname == "Newark") #filter to newark
 ```
 
 
-## Milestone 3: One data visualization
+##Conclusion section
+1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis; (ii) describing limitations of the analysis and threats to inference (missing data, confounding, etc), and stating how you could improve your analysis if you had more time/money. (2pts)
 
-The next milestone will require that your Distill article loads the data you have selected and produces one interesting and polished data visualization. This could either show the distribution of one variable or the relationship between two variables.
 
-```{r}
-#plot mean household income in 2000 across nj
-
-social_mobility_nj <- data_nj |>
-  group_by(county) |>
-  mutate(mean_hinc_mean2000 = mean(hhinc_mean2000)) |>
-  ggplot(mapping = aes(x = county, y = mean_hinc_mean2000)) +
-  geom_point() +
-  labs(
-    x = "County Number",
-    y = "Mean Household Income (2000)"
-  )
-
-social_mobility_nj
-```
+#Extra Analysis/ Thinking Process 
 
 ```{r}
-
-library(scales)
-
-#mean household income in 2000 vs single parent share in newark
-
-plot <- newark |>
-  ggplot(
-    mapping = aes(x = singleparent_share2000, y = hhinc_mean2000)) +
-  geom_point() +
-  labs(
-    x = "Single Parent Share (2000)",
-    y = "Mean Household Income (2000)"
-    ) +
-  scale_y_continuous(labels = comma)
-
-plot #these numbers are definitely WAY TOO BIG, not sure why
 ```
-
-
-## Milestone 4: Add results from one analysis 
-
-By this time, your article should contain one visualization and one analysis that attempts to answer your research question. There does not need to be a long discussion, but the results should be presented in either a second visualization or a nicely formatted table.
-
-
-```{r}
-#mean household income in 2000 vs single parent share in newark
-
-plot2 <- newark |>
-  ggplot(
-    mapping = aes(x = singleparent_share2000, y = hhinc_mean2000)) +
-  geom_point() +
-  labs(
-    x = "Single Parent Share (2000)",
-    y = "Mean Household Income (2000)"
-    ) +
-  scale_y_continuous(labels = comma) +
-  geom_smooth(method=lm) 
-
-plot2
-```
-
-Analysis: There is a clear link between single parent share and mean household income, with a higher single parent share being correlated with a lower average household income
-
