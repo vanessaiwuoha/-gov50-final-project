@@ -8,26 +8,36 @@ output:
 ---
 
 ## Introduction
-describe the research question and main hypothesis; describe why it is important.
 
+Last semester, I researched social mobility in my hometown, Newark, New Jersey, using Raj Chetty’s data from Opportunity Insights. Through researching different variables amongst my city’s wards, or neighborhoods, I found that two had extremely opposite outcomes. The East Ward, with a majority white and Hispanic population, had the highest median income and social mobility rating. The Central Ward, on the other hand, has a majority Black population and has the social mobility score and second lowest median income. I also observed that there was a high correlation between both “foreign-born share,” residents born outside the U.S., and “single-parent share” on social mobility for the 25th percentile. (need for more background?) 
+
+Those observations led me to my research question: Why is there a stark difference between the social mobility outcomes of two wards in Newark, the Central and East? From my preliminary data, I believe the discrepancy in the amount of foreign-born residents might be the cause of social mobility ratings, perhaps due to a stronger value of education or as a cause of the systematic racism faced by African-Americans over time. I also explore if there is a discrepancy between the two ward’s “economic connectedness,” (a measure of the connection between low and high income residents in an area) an element that Chetty argues is strongly tied to social mobility. This information is incredibly important to understand because Newark is a low-income, disadvantaged city, with a rich history and great potential. Despite numerous historical attempts at revitalization, many residents are living in poverty and the city is still performing poorly. I think this study is a great first to look into potential solutions by understanding why some populations are doing better than others and what lessons could be incorporated from that analysis. 
+
+---
 
 ##Data section 
+
 2-3 paragraphs + plot visualizing main outcome of interest. (3pts)
 
 ```{r}
 ```
 
+---
 
 ##Results section 
+
 plot of main analysis + regression output + 2-3 paragraphs of description and interpretation of the plots and regression (including interpreting the main coefficient of interest and describing if it is statistically significant and if we should interpret it causally). This section could be longer if you choose to include additional analyses. (8pts)
 
 ```{r}
 ```
 
+---
 
 ##Conclusion section
+
 1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis; (ii) describing limitations of the analysis and threats to inference (missing data, confounding, etc), and stating how you could improve your analysis if you had more time/money. (2pts)
 
+---
 
 #Extra Analysis/ Thinking Process 
 
