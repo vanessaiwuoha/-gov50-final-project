@@ -69,9 +69,48 @@ Those observations led me to my research question: Why is there a stark differen
 ##Data section 
 
 2-3 paragraphs + plot visualizing main outcome of interest. (3pts)
+~ describe the observed differences between central and east ward 
+
+background data across Wards
 
 ```{r, echo = FALSE}
+#Background to compare variables and outcomes across 
+vars_interest <- Newark |>
+  group_by(wards)|>
+  filter(wards != "") |>
+  summarize_at(
+    vars(kfr_pooled_pooled_p25, jail_pooled_pooled_p25, med_hhinc2016, foreign_share2010, singleparent_share2010, share_black2010, share_hisp2010, share_white2010, frac_coll_plus2010),
+    mean)
 
+knitr::kable (vars_interest, col.names = c("Wards", "kfr pooled 25", "jail pooled 25", "Median Household Income 2016", "Foreign Share 2010", "Single Parent Share 2010", "Black Share 2010","Hispanic Share 2010", "White Share 2010", "Fraction with College Degree or More 2010"), digits = 2)
+
+```
+
+
+social capital data across Ward
+
+```{r, echo = FALSE}
+social_capital_ward <- Newark |>
+  group_by(wards) |>
+  filter(wards != "") |>
+  summarize_at(
+    vars(ec_zip, nbhd_ec_zip, ec_high_zip, exposure_grp_mem_zip, 
+exposure_grp_mem_high_zip, volunteering_rate_zip),
+    mean)
+
+knitr::kable (social_capital_ward, col.names = c("Wards", "High-type Economic Connectedness Calculated using Neighborhood Friends", "Economic Connectedness", "Economic Connectedness for High-SES Individuals", "Mean Exposure to High-SES Individuals for Low-SES Individuals", "Mean Exposure to high-SES Individuals for High-SES Individuals", "Volunteering Rate"), digits = 2)
+
+```
+
+---
+
+##Results section 
+
+plot of main analysis + regression output + 2-3 paragraphs of description and interpretation of the plots and regression (including interpreting the main coefficient of interest and describing if it is statistically significant and if we should interpret it causally). This section could be longer if you choose to include additional analyses. (8pts)
+
+plot of main analysis 
+
+```{r, echo = FALSE}
 #plot of interest: there is a high correlation between foreign share and *kfr*
 Newark |>
   ggplot(mapping = aes(x = foreign_share2010, y = kfr_pooled_pooled_p25)) + 
@@ -83,37 +122,23 @@ Newark |>
   ) 
 
 #how could i add correlation to the graph
-```
 
----
-
-##Results section 
-
-plot of main analysis + regression output + 2-3 paragraphs of description and interpretation of the plots and regression (including interpreting the main coefficient of interest and describing if it is statistically significant and if we should interpret it causally). This section could be longer if you choose to include additional analyses. (8pts)
-
-
-background data across Wards
-
-```{r, echo = FALSE}
-#Background to compare variables and outcomes across 
-vars_interest <- Newark |>
-  group_by(wards)|>
-  summarize_at(
-    vars(kfr_pooled_pooled_p25, jail_pooled_pooled_p25, med_hhinc2016, foreign_share2010, singleparent_share2010, share_black2010, share_hisp2010, share_white2010, frac_coll_plus2010),
-    mean)
-vars_interest <- vars_interest #HOW TO DELETE LAST ROW
-
-knitr::kable (vars_interest, col.names = c("Wards", "kfr pooled 25", "jail pooled 25", "Median Household Income 2016", "Foreign Share 2010", "Single Parent Share 2010", "Black Share 2010","Hispanic Share 2010", "White Share 2010", "Fraction with College Degree or More 2010"), digits = 2)
 ```
 
 
 regression output 
 
-```{r}
+```{r, echo = FALSE}
+library(broom)
+  lm_1 <-lm(kfr_pooled_pooled_p25 ~ wards + foreign_share2010 + singleparent_share2010 + poor_share2010 + jail_pooled_pooled_p25 + frac_coll_plus2010 , data = Newark )
+  
+  tidy(lm_1)|>
+    knitr::kable(digits = 3)
+  
+# how should interpret the wards section
+  
 ```
 
-
-plot of main analysis 
 
 ```{r}
 ```
@@ -125,11 +150,4 @@ plot of main analysis
 1 paragraph 
 (i) summarizing results and assessing the extent to which you find support for your hypothesis; 
 (ii) describing limitations of the analysis and threats to inference (missing data, confounding, etc), 
-and stating how you could improve your analysis if you had more time/money. 
-
----
-
-#Extra Analysis/ Thinking Process 
-
-```{r}
-```
+(iii) and stating how you could improve your analysis if you had more time/money. 

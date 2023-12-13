@@ -134,15 +134,15 @@ cor(Newark$ec_high_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") # -0
  #look at race
  cor(Newark$share_black2010, Newark$poor_share2010, use = "complete.obs") #0.1434808
  cor(Newark$share_black2010, Newark$singleparent_share2010, use = "complete.obs") #0.4707044
- cor(Newark$share_black2010, Newark$jail_black_pooled_p25, use = "complete.obs") # 0.04999482
+ cor(Newark$share_black2010, Newark$jail_pooled_pooled_p25 , use = "complete.obs") #  0.6430772
  
  cor(Newark$share_white2010, Newark$poor_share2010, use = "complete.obs") #-0.2453565
  cor(Newark$share_white2010, Newark$singleparent_share2010, use = "complete.obs") #-0.5488667
- cor(Newark$share_white2010, Newark$jail_black_pooled_p25, use = "complete.obs") # 0.08108504
+ cor(Newark$share_white2010, Newark$jail_pooled_pooled_p25, use = "complete.obs") # -0.510052
  
  cor(Newark$share_hisp2010, Newark$poor_share2010, use = "complete.obs") #-0.05337429
  cor(Newark$share_hisp2010, Newark$singleparent_share2010, use = "complete.obs") #-0.3158382
- cor(Newark$share_hisp2010, Newark$jail_black_pooled_p25, use = "complete.obs") # -0.06535808
+ cor(Newark$share_hisp2010, Newark$jail_pooled_pooled_p25, use = "complete.obs") # - -0.5502905
  
  #redlining rating 
  redline_score<- Newark |>
@@ -152,14 +152,15 @@ cor(Newark$ec_high_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") # -0
  
 ```
 
-#Try a linear regression HELP!
+#Try a linear regression 
 
 ```{r}
 
-  lm(kfr_pooled_pooled_p25 ~ foreign_share2010 + singleparent_share2010, Data = Newark )
-
-Newark |>
-  count(kfr_pooled_pooled_p25)
+library(broom)
+  lm_1 <-lm(kfr_pooled_pooled_p25 ~ foreign_share2010 + singleparent_share2010 + poor_share2010 + jail_pooled_pooled_p25 , data = Newark )
+  
+  tidy(lm_1)|>
+    knitr::kable(digits = 3)
   
 ```
 
@@ -178,6 +179,7 @@ correlation between jail and blackshare
 #Background to compare variables and outcomes across 
 vars_interest <- Newark |>
   group_by(wards)|>
+  filter(wards != "") |>
   summarize_at(
     vars(kfr_pooled_pooled_p25, jail_pooled_pooled_p25, med_hhinc2016, foreign_share2010, singleparent_share2010, share_black2010, share_hisp2010, share_white2010, frac_coll_plus2010),
     mean)
@@ -196,10 +198,15 @@ knitr::kable (vars_interest, col.names = c("Wards", "kfr pooled 25", "jail poole
 #Social capital stuff 
 social_capital_ward <- Newark |>
   group_by(wards) |>
+  filter(wards != "") |>
   summarize_at(
     vars(ec_zip, nbhd_ec_zip, ec_high_zip, exposure_grp_mem_zip, 
 exposure_grp_mem_high_zip, volunteering_rate_zip),
     mean)
+
+knitr::kable (social_capital_ward, col.names = c("Wards", "High-type Economic Connectedness Calculated using Neighborhood Friends", "Economic Connectedness", "Economic Connectedness for High-SES Individuals", "Mean Exposure to High-SES Individuals for Low-SES Individuals", "Mean Exposure to high-SES Individuals for High-SES Individuals", "Volunteering Rate"), digits = 2)
+
+
 
 #check for if social capital measures positively correlate with social mobility
   cor(Newark$ec_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #-0.359715
@@ -239,6 +246,13 @@ foreign_on_single <- Newark |>
     x = "Foreign Share 2010",
     y = "Single Parent Share 2010"
   )
-  
+
+
+## on education values
+
+
+#on sytematic racism
+   cor(Newark$share_black2010, Newark$singleparent_share2010, use = "complete.obs") #0.4707044
+   cor(Newark$share_black2010, Newark$jail_pooled_pooled_p25 , use = "complete.obs") #  0.6430772
 ```
 
