@@ -1555,7 +1555,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span><span class='co'>#social capital data</span></span>
 <span><span class='va'>social_capital</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"~/Downloads/social_capital_zip.csv"</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='co'>#filtering the atlas data </span></span>
+<span><span class='co'>#filtering the atlas data</span></span>
 <span><span class='va'>row_numbers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span>pattern <span class='op'>=</span> <span class='st'>"Newark, NJ"</span>, x <span class='op'>=</span> <span class='va'>atlas</span><span class='op'>$</span><span class='va'>tract_name</span><span class='op'>)</span></span>
 <span><span class='va'>Newark_with_East</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>atlas</span>, subset <span class='op'>=</span> <span class='va'>row_numbers</span><span class='op'>)</span></span>
 <span><span class='va'>east_newark_rows</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span>pattern <span class='op'>=</span> <span class='st'>"East Newark, NJ"</span>, x <span class='op'>=</span> <span class='va'>Newark_with_East</span><span class='op'>$</span><span class='va'>tract_name</span><span class='op'>)</span></span>
@@ -1576,7 +1576,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>      <span class='va'>tract_name</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"University Heights, Newark, NJ"</span>, <span class='st'>"Springfield/Belmont, Newark, NJ"</span>, <span class='st'>"Central Business District, Newark, NJ"</span>, <span class='st'>"University Heights, Newark, NJ"</span><span class='op'>)</span> <span class='op'>~</span> <span class='st'>"Central"</span>, </span>
 <span>    <span class='op'>)</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='co'>#Filter the data by wards (atlas data)</span></span>
 <span><span class='co'>#filtering the social capital data</span></span>
 <span><span class='va'>newark_2</span> <span class='op'>&lt;-</span> <span class='va'>social_capital</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>zip</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>7102</span>, <span class='fl'>7103</span>, <span class='fl'>7104</span>, <span class='fl'>7105</span>, <span class='fl'>7106</span>, <span class='fl'>7107</span>, <span class='fl'>7108</span>, <span class='fl'>7112</span>, <span class='fl'>7114</span><span class='op'>)</span><span class='op'>)</span></span>
@@ -1597,7 +1596,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>newark_2</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join_by.html'>join_by</a></span><span class='op'>(</span><span class='va'>wards</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<p>Last semester, I researched social mobility in my hometown, Newark, New Jersey, using Raj Chetty’s data from Opportunity Insights. Through researching different variables amongst my city’s wards, or neighborhoods, I found that two had extremely opposite outcomes. The East Ward, with a majority white and Hispanic population, had the highest median income and social mobility rating. The Central Ward, on the other hand, has a majority Black population and has the social mobility score and second lowest median income.</p>
+<p>Last semester, I researched social mobility in my hometown, Newark, New Jersey, using Raj Chetty’s data from Opportunity Insights. Through researching different variables across my city’s wards, or neighborhoods, I found that two had extremely opposite outcomes. The East Ward, with a majority white and Hispanic population, had the highest median income and social mobility rating. The Central Ward, on the other hand, has a majority Black population and has the social mobility score and second lowest median income.</p>
 <p>Those observations led me to my research question: Why is there a stark difference between the social mobility outcomes of two wards in Newark, the Central and East? From my preliminary data, I believe the discrepancy in the amount of foreign-born residents might be the cause of social mobility ratings, perhaps due to differences in educational attainment. I also explore if there is a discrepancy between the two ward’s “economic connectedness,” (a measure of the connection between low and high income residents in an area) an element that Chetty argues is strongly tied to social mobility. This information is incredibly important to understand because Newark is a low-income, disadvantaged city, with a rich history and great potential. Despite numerous historical attempts at revitalization, many residents are living in poverty and the city is still performing poorly. I think this study is a great first to look into potential solutions by understanding why some populations are doing better than others and what lessons could be incorporated from that analysis.</p>
 <hr />
 <h2 id="data">Data</h2>
@@ -1797,11 +1796,12 @@ West
 </tbody>
 </table>
 </div>
-<p>All the data is collected from Chetty’s Opportunity Insights. The chart above displays different variables and outcomes across the wards. From this table, we can see that the East ward has the highest foreign share, highest social mobility score, highest white share, and highest median income. The Central ward has the 2nd lowest median income, third highest black share, and 3rd lowest social mobility (there is some discrepancy between the central results here compared to EC50, due to the data set - to be explained in conclusions).</p>
-<p>The “kfr_pooled_pooled_p25” is the social mobility measure which ranks what</p>
-<p>The “foreign_share2010”</p>
-<p>The “frac_coll_plus2010”</p>
-<p>*describe the important variables i will be looking at</p>
+<p>All the data is collected from Chetty’s Opportunity Insights. The chart above displays different variables and outcomes across the wards. From this table, we can see that the East ward has the highest foreign share, highest social mobility score, highest white share, and highest median income. The Central ward has the 2nd lowest median income, third highest black share, and 3rd lowest social mobility (there is some discrepancy between the Central results here compared to EC50, due to the data set combination- to be explained in conclusions).</p>
+<h4 id="here-are-descriptions-of-the-data-we-will-be-discussing">Here are descriptions of the data we will be discussing:</h4>
+<p>The “kfr_pooled_pooled_p25” is the social mobility measure of absolute mobility for children born in the lower 25 percentile of income. Which, essence, answers the question: “Where do people in the 25th percentile end up?” It is a percentile ranking from 0 to 100, with 0 being the lowest ranking and 100 the highest. In this paper, I will just refer to it as social mobility.</p>
+<p>The “foreign_share2010” is the fraction of immigrants.</p>
+<p>The following: “share_black2010,” “share_white2010,” and “share_hisp2010” are all fractions of those races in a given area.</p>
+<p>The “frac_coll_plus2010” is the fraction of those with a college degree or higher in 2010.</p>
 <h3 id="social-capital-data-across-wards">Social Capital Data Across Wards</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1961,7 +1961,20 @@ West
 </tbody>
 </table>
 </div>
-<p>This data shows the different measures for economic connectedness across the wards, this element is noted by Chetty to be highly correlated with social mobility. Here we see that there a quite a bit of NA’s, but the East ward has the lowest economic connectedness score and the Central ward having the highest “Exposure to High-SES Individuals for Low-SES Individuals” score.</p>
+<p>This table shows the different measures for economic connectedness across the wards, this element is noted by Chetty to be highly correlated with social mobility. Here we see that there a quite a bit of NA’s, but the East ward has the lowest economic connectedness score and the Central ward having the highest “Exposure to High-SES Individuals for Low-SES Individuals” score. I ended up not futher analysizing these correlations due to the lack of data for the most important variable: “ec_zip”.</p>
+<h4 id="description-of-variables">Description of variables</h4>
+<p><em>The descriptions below are taken directly from the Opportunity Insights’ Social Capital II: Determinants of Economic Connectedness data set “Read me” file.</em></p>
+<ul>
+<li>Social Capital Data: Determinants of Economic Connectedness
+<ul>
+<li>“ec_zip”: baseline definition of economic connectedness</li>
+<li>“nbhd_ec_zip”: economic connectedness calculated using only within-neighborhood friends</li>
+<li>“ec_high_zip”: economic connectedness for high-SES individuals</li>
+<li>“exposure_grp_mem_zip”: mean exposure to high-SES individuals by ZIP code for low-SES individuals</li>
+<li>“exposure_grp_mem_high_zip”: mean exposure to high-SES individuals by ZIP code for high-SES individuals</li>
+<li>“volunteering_rate_zip”: the percentage of Facebook users who are members of a group which is predicted to be about ‘volunteering’ or ‘activism’ based on group title and other group characteristics.</li>
+</ul></li>
+</ul>
 <h3 id="share-of-college-graduates-across-wards-2010">Share of College Graduates Across Wards (2010)</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1979,7 +1992,6 @@ West
 <p>The bar plot shows the varying shares of college graduates across the wards with the East having the lowest share, the South having the highest share, and the Central ward having the 2nd lowest share.</p>
 <hr />
 <h2 id="results">Results</h2>
-<p>plot of main analysis + regression output + 2-3 paragraphs of description and interpretation of the plots and regression (including interpreting the main coefficient of interest and describing if it is statistically significant and if we should interpret it causally). This section could be longer if you choose to include additional analyses. (8pts)</p>
 <h3 id="correlation-between-foreign-share-and-social-mobility-2010">Correlation Between Foreign Share and Social Mobility (2010)</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1994,16 +2006,49 @@ West
 </div>
 <img src="index_files/figure-html5/unnamed-chunk-5-1.png" width="624" />
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>Newark</span><span class='op'>$</span><span class='va'>foreign_share2010</span>, <span class='va'>Newark</span><span class='op'>$</span><span class='va'>kfr_pooled_pooled_p25</span>, use <span class='op'>=</span> <span class='st'>"complete.obs"</span><span class='op'>)</span> <span class='co'>#0.8285084</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>Newark</span><span class='op'>$</span><span class='va'>foreign_share2010</span>, <span class='va'>Newark</span><span class='op'>$</span><span class='va'>kfr_pooled_pooled_p25</span>, use <span class='op'>=</span> <span class='st'>"complete.obs"</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>[1] 0.8285084</code></pre>
 </div>
-<p>This chart shows there is a strong correlation between foreign share and social mobility in Newark. This is interesting to think about considering that the East Ward has the highest foreign share as well as the highest social mobility score, which we know is highly correlated.</p>
+<p>This chart shows there is a strong correlation between foreign share and social mobility in Newark: 0.82. It is interesting to think about considering that the East Ward has the highest foreign share as well as the highest social mobility score. However, this is not enough information to establish causation.</p>
+<h3 id="correlation-between-fraction-of-population-with-amount-of-black-residents-and-social-mobility-2010">Correlation Between Fraction of Population with Amount of Black Residents and Social Mobility (2010)</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>Newark</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>share_black2010</span> , y <span class='op'>=</span> <span class='va'>kfr_pooled_pooled_p25</span> <span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Fraction of Black Residents 2010"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Social Mobility"</span></span>
+<span>  <span class='op'>)</span> </span></code></pre>
+</div>
+<img src="index_files/figure-html5/unnamed-chunk-6-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>Newark</span><span class='op'>$</span><span class='va'>share_black2010</span>, <span class='va'>Newark</span><span class='op'>$</span><span class='va'>kfr_pooled_pooled_p25</span>, use <span class='op'>=</span> <span class='st'>"complete.obs"</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] -0.7738769</code></pre>
+</div>
+<p>There is a strong negative correlation between share black and social mobility: -0.77. This is interesting to note because the wards with higher amounts of black residents, like the Central and South ward have lower social mobility. This, however, is not proof of causation and there most likely is come kind of confounder with the race aspect.</p>
 <h3 id="correlation-between-fraction-of-population-with-college-degree-and-social-mobility-2010">Correlation Between Fraction of Population with College Degree and Social Mobility (2010)</h3>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>Newark</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>frac_coll_plus2010</span> , y <span class='op'>=</span> <span class='va'>kfr_pooled_pooled_p25</span> <span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Fraction of College Degree or Higher 2010"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Social Mobility"</span></span>
+<span>  <span class='op'>)</span> </span></code></pre>
 </div>
-<p>Here, we see interestingly enough, the amount of college attainment is not at all correlated with social mobility. There is a correlation of</p>
+<img src="index_files/figure-html5/unnamed-chunk-7-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>Newark</span><span class='op'>$</span><span class='va'>frac_coll_plus2010</span>, <span class='va'>Newark</span><span class='op'>$</span><span class='va'>kfr_pooled_pooled_p25</span>, use <span class='op'>=</span> <span class='st'>"complete.obs"</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] 0.003872987</code></pre>
+</div>
+<p>Here, we see interestingly enough, the amount of college attainment is not at all correlated with social mobility (0.003). It is near zero, which seems a bit off and might be impacted by some of the missing data.</p>
 <h3 id="regression-output">Regression Output</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2138,18 +2183,16 @@ R2 Adj.
 </tbody>
 </table>
 </div>
-<p>~interpret the regression line by line
-The regression reveals that there is indeed a high impact of black share and foreign share with on social mobility. We also observe that these effects have a high statistical significance.</p>
+<p>This regression reveals a lot of interesting information. The intercept shows, that holding those 3 variables constant, the social mobility for children in the 25th income percentile in Newark is 33, which is extremely low compared to the <em>country average of 42.85 and the New Jersey average of 46.47 </em>(data from my EC50 project)* We observe that each 1 increase of foreign share adds an average of 22.52 to that social mobility outcome, holding the other variables constant, and it is statistically significant. We that see that black share reduces social mobility by 6 by each percent increase, controlling for the other variables. The effect is also statistically significant, with both measures having a a p-value of less than 0.001. The fraction of those with a college degree has a mere 4.57 measure effect with each percent increase but it is not statistically significant.</p>
 <hr />
 <h2 id="conclusion">Conclusion</h2>
-<p>1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis;</p>
-<p>RESULTS -&gt; its more about
-black and foreign share might be counfounders for something else</p>
-<ol start="2" type="i">
-<li><p>describing limitations of the analysis and threats to inference (missing data, confounding, etc),</p></li>
-<li><p>and stating how you could improve your analysis if you had more time/money.</p></li>
-</ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Summarize Results</p>
+<p>The plots and linear regression reveals that there is indeed a high correlation between black share and foreign share on social mobility. We also observe that these effects have a high statistical significance.</p>
+<p>Describe Limitations
+Some of the limitations of my study are that the combination of the data sets led to a mismatch between how the different wards were created. In the “atlas” data, I created the wards based on the census tracts because it included the specific neighborhoods, but in the “social capital” data, the wards were created based on zip codes, which sometimes overlaps between wards. This also caused some data like social mobility to very form what I found in my original EC50 project. I solved this by grouping the wards of the “social capital” data based on which zip codes had the largest amount of neighborhoods in a certain ward. Another limitation is that I had to delete data that wasn’t able to be fit into a ward, which may have impacted results. A huge issue is that “foreign share” and “black share,” though they are highly statistically significant, could be confounders. There could be other factors such as education or occupation, that may be the real “cause” of social mobility but are correlated with variables like race. My study also fails to establish causation and is limited at correlation.</p>
+<p>How I would improve my analysis
+If I had more time and resources, I would collect more detailed/individualized census data. I would also want to further study if I want to observe if outcomes vary between different immigrant groups (specific to region in the world and maybe even by country) and whether there is a pattern between the different racial groups/immigrant groups and SAT scores. I also would look into parent occupation and college attainment as well as the type of high schools children attend (charter school, magnet school, or regular public school). It would be interesting to pair the data analysis sociology concepts in order to provide further understanding. There are many exciting variables I would explore and experiment I would in order to better understand why there is a correlation between immigrant groups and social mobility in Newark.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

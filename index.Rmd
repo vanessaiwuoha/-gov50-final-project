@@ -17,7 +17,7 @@ atlas <- read_dta("~/Downloads/atlas.dta") #this has issues loading
 #social capital data
 social_capital <- read_csv("~/Downloads/social_capital_zip.csv")
 
-#filtering the atlas data 
+#filtering the atlas data
 row_numbers <- grepl(pattern = "Newark, NJ", x = atlas$tract_name)
 Newark_with_East <- subset(x = atlas, subset = row_numbers)
 east_newark_rows <- grepl(pattern = "East Newark, NJ", x = Newark_with_East$tract_name)
@@ -38,7 +38,6 @@ newark <- newark |>
       tract_name %in% c("University Heights, Newark, NJ", "Springfield/Belmont, Newark, NJ", "Central Business District, Newark, NJ", "University Heights, Newark, NJ") ~ "Central", 
     ))
 
-#Filter the data by wards (atlas data)
 #filtering the social capital data
 newark_2 <- social_capital |>
   filter(zip %in% c(7102, 7103, 7104, 7105, 7106, 7107, 7108, 7112, 7114))
@@ -60,7 +59,7 @@ Newark <- newark |>
 
 ```
 
-Last semester, I researched social mobility in my hometown, Newark, New Jersey, using Raj Chetty's data from Opportunity Insights. Through researching different variables amongst my city's wards, or neighborhoods, I found that two had extremely opposite outcomes. The East Ward, with a majority white and Hispanic population, had the highest median income and social mobility rating. The Central Ward, on the other hand, has a majority Black population and has the social mobility score and second lowest median income.
+Last semester, I researched social mobility in my hometown, Newark, New Jersey, using Raj Chetty's data from Opportunity Insights. Through researching different variables across my city's wards, or neighborhoods, I found that two had extremely opposite outcomes. The East Ward, with a majority white and Hispanic population, had the highest median income and social mobility rating. The Central Ward, on the other hand, has a majority Black population and has the social mobility score and second lowest median income.
 
 Those observations led me to my research question: Why is there a stark difference between the social mobility outcomes of two wards in Newark, the Central and East? From my preliminary data, I believe the discrepancy in the amount of foreign-born residents might be the cause of social mobility ratings, perhaps due to differences in educational attainment. I also explore if there is a discrepancy between the two ward's "economic connectedness," (a measure of the connection between low and high income residents in an area) an element that Chetty argues is strongly tied to social mobility. This information is incredibly important to understand because Newark is a low-income, disadvantaged city, with a rich history and great potential. Despite numerous historical attempts at revitalization, many residents are living in poverty and the city is still performing poorly. I think this study is a great first to look into potential solutions by understanding why some populations are doing better than others and what lessons could be incorporated from that analysis.
 
@@ -85,15 +84,17 @@ kable (vars_interest, col.names = c("Wards", "Social Mobility", "Median Househol
 
 ```
 
-All the data is collected from Chetty's Opportunity Insights. The chart above displays different variables and outcomes across the wards. From this table, we can see that the East ward has the highest foreign share, highest social mobility score, highest white share, and highest median income. The Central ward has the 2nd lowest median income, third highest black share, and 3rd lowest social mobility (there is some discrepancy between the central results here compared to EC50, due to the data set - to be explained in conclusions).
+All the data is collected from Chetty's Opportunity Insights. The chart above displays different variables and outcomes across the wards. From this table, we can see that the East ward has the highest foreign share, highest social mobility score, highest white share, and highest median income. The Central ward has the 2nd lowest median income, third highest black share, and 3rd lowest social mobility (there is some discrepancy between the Central results here compared to EC50, due to the data set combination- to be explained in conclusions).
 
-The "kfr_pooled_pooled_p25" is the social mobility measure which ranks what 
+#### Here are descriptions of the data we will be discussing: 
 
-The "foreign_share2010"
+The "kfr_pooled_pooled_p25" is the social mobility measure of absolute mobility for children born in the lower 25 percentile of income. Which, essence, answers the question: "Where do people in the 25th percentile end up?" It is a percentile ranking from 0 to 100, with 0 being the lowest ranking and 100 the highest. In this paper, I will just refer to it as social mobility.
 
-The "frac_coll_plus2010"
+The "foreign_share2010" is the fraction of immigrants.
 
-*describe the important variables i will be looking at 
+The following: "share_black2010," "share_white2010," and "share_hisp2010" are all fractions of those races in a given area. 
+
+The "frac_coll_plus2010" is the fraction of those with a college degree or higher in 2010.
 
 
 ### Social Capital Data Across Wards
@@ -112,7 +113,18 @@ kable (social_capital_ward, col.names = c("Wards", "High-type Economic Connected
 
 ```
 
-This data shows the different measures for economic connectedness across the wards, this element is noted by Chetty to be highly correlated with social mobility. Here we see that there a quite a bit of NA's, but the East ward has the lowest economic connectedness score and the Central ward having the highest "Exposure to High-SES Individuals for Low-SES Individuals" score.
+This table shows the different measures for economic connectedness across the wards, this element is noted by Chetty to be highly correlated with social mobility. Here we see that there a quite a bit of NA's, but the East ward has the lowest economic connectedness score and the Central ward having the highest "Exposure to High-SES Individuals for Low-SES Individuals" score. I ended up not futher analysizing these correlations due to the lack of data for the most important variable: "ec_zip".
+
+#### Description of variables 
+*The descriptions below are taken directly from the Opportunity Insights' Social Capital II: Determinants of Economic Connectedness data set "Read me" file.*
+
+* Social Capital Data: Determinants of Economic Connectedness
+  + "ec_zip": baseline definition of economic connectedness
+  + "nbhd_ec_zip": economic connectedness calculated using only within-neighborhood friends
+  + "ec_high_zip": economic connectedness for high-SES individuals
+  + "exposure_grp_mem_zip": mean exposure to high-SES individuals by ZIP code for low-SES individuals
+  + "exposure_grp_mem_high_zip": mean exposure to high-SES individuals by ZIP code for high-SES individuals
+  + "volunteering_rate_zip": the percentage of Facebook users who are members of a group which is predicted to be about ‘volunteering’ or ‘activism’ based on group title and other group characteristics. 
 
 ### Share of College Graduates Across Wards (2010)
 
@@ -125,6 +137,7 @@ Newark |>
     x = "Wards",
     y = "Fraction of College Degree or Higher 2010"
   )
+
 ```
 
 The bar plot shows the varying shares of college graduates across the wards with the East having the lowest share, the South having the highest share, and the Central ward having the 2nd lowest share.
@@ -132,8 +145,6 @@ The bar plot shows the varying shares of college graduates across the wards with
 ------------------------------------------------------------------------
 
 ## Results 
-
-plot of main analysis + regression output + 2-3 paragraphs of description and interpretation of the plots and regression (including interpreting the main coefficient of interest and describing if it is statistically significant and if we should interpret it causally). This section could be longer if you choose to include additional analyses. (8pts)
 
 ### Correlation Between Foreign Share and Social Mobility (2010)
 
@@ -147,15 +158,32 @@ Newark |>
     y = "Social Mobility"
   ) 
 
-cor(Newark$foreign_share2010, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #0.8285084
+cor(Newark$foreign_share2010, Newark$kfr_pooled_pooled_p25, use = "complete.obs")
 
 ```
 
-This chart shows there is a strong correlation between foreign share and social mobility in Newark. This is interesting to think about considering that the East Ward has the highest foreign share as well as the highest social mobility score, which we know is highly correlated.
+This chart shows there is a strong correlation between foreign share and social mobility in Newark: 0.82. It is interesting to think about considering that the East Ward has the highest foreign share as well as the highest social mobility score. However, this is not enough information to establish causation.
+
+### Correlation Between Fraction of Population with Amount of Black Residents and Social Mobility (2010)
+
+```{r}
+Newark |>
+  ggplot(mapping = aes(x = share_black2010 , y = kfr_pooled_pooled_p25 )) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "Fraction of Black Residents 2010",
+    y = "Social Mobility"
+  ) 
+
+cor(Newark$share_black2010, Newark$kfr_pooled_pooled_p25, use = "complete.obs")
+```
+
+There is a strong negative correlation between share black and social mobility: -0.77. This is interesting to note because the wards with higher amounts of black residents, like the Central and South ward have lower social mobility. This, however, is not proof of causation and there most likely is come kind of confounder with the race aspect.
 
 ### Correlation Between Fraction of Population with College Degree and Social Mobility (2010)
 
-```{r, echo = FALSE}
+```{r}
 Newark |>
   ggplot(mapping = aes(x = frac_coll_plus2010 , y = kfr_pooled_pooled_p25 )) + 
   geom_point() +
@@ -165,9 +193,11 @@ Newark |>
     y = "Social Mobility"
   ) 
 
+cor(Newark$frac_coll_plus2010, Newark$kfr_pooled_pooled_p25, use = "complete.obs")
+
 ```
 
-Here, we see interestingly enough, the amount of college attainment is not at all correlated with social mobility. There is a correlation of 
+Here, we see interestingly enough, the amount of college attainment is not at all correlated with social mobility (0.003). It is near zero, which seems a bit off and might be impacted by some of the missing data. 
 
 ### Regression Output 
 
@@ -179,18 +209,18 @@ modelsummary::modelsummary(lm_1, statistic = c("s.e. = {std.error}", "p = {p.val
   
 ```
 
-~interpret the regression line by line
-The regression reveals that there is indeed a high impact of black share and foreign share with on social mobility. We also observe that these effects have a high statistical significance.
+This regression reveals a lot of interesting information. The intercept shows, that holding those 3 variables constant, the social mobility for children in the 25th income percentile in Newark is 33, which is extremely low compared to the country average of *42.85* and the New Jersey average of *46.47* *(data from my EC50 project)* We observe that each 1 increase of foreign share adds an average of 22.52 to that social mobility outcome, holding the other variables constant, and it is statistically significant. We that see that black share reduces social mobility by 6 by each percent increase, controlling for the other variables. The effect is also statistically significant, with both measures having a a p-value of less than 0.001. The fraction of those with a college degree has a mere 4.57 measure effect with each percent increase but it is not statistically significant.
 
 ------------------------------------------------------------------------
 
-## Conclusion 
+## Conclusion
 
-1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis;
+Summarize Results 
 
-RESULTS -> its more about 
-black and foreign share might be counfounders for something else
+The plots and linear regression reveals that there is indeed a high correlation between black share and foreign share on social mobility. We also observe that these effects have a high statistical significance.
+~assessing the extent to which you find support for your hypothesis
 
-(ii) describing limitations of the analysis and threats to inference (missing data, confounding, etc),
+Some of the limitations of my study are that the combination of the data sets led to a mismatch between how the different wards were created. In the “atlas” data, I created the wards based on the census tracts because it included the specific neighborhoods, but in the “social capital” data, the wards were created based on zip codes, which sometimes overlaps between wards. This also caused some data like social mobility to very form what I found in my original EC50 project. I solved this by grouping the wards of the “social capital” data based on which zip codes had the largest amount of neighborhoods in a certain ward. A huge issue is that “foreign share” and “black share,” though they are highly statistically significant, could be confounders. There could be other factors such as education or occupation, that may be the real “cause” of social mobility but are correlated with variables like race. 
 
-(iii) and stating how you could improve your analysis if you had more time/money.
+How I would improve my analysis 
+If I had more time and resources, I would collect more detailed/individualized census data. I would gather data on specified immigrant groups (specific to region in the world and maybe even by country), SAT scores, parent occupation and college attainment, and the type of high schools attended by the children (charter school, magnet school, or regular public school). It would be interesting to pair the data analysis sociology concepts in order to provide further understanding. A big next step would be executing an experiment to test for causation between "foreign share" and social mobility.
