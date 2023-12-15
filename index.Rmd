@@ -167,7 +167,7 @@ Newark |>
 
 ```
 
-Here, we see interestingly enough, the amount of college attainment is not at all correlated with social mobility. 
+Here, we see interestingly enough, the amount of college attainment is not at all correlated with social mobility. There is a correlation of 
 
 ### Regression Output 
 

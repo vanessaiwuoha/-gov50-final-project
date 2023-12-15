@@ -119,6 +119,7 @@ exposure_grp_mem_high_zip, volunteering_rate_zip),
  cor(Newark$clustering_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #0.4364739
  cor(Newark$frac_coll_plus2010, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #0.003872987
 cor(Newark$ec_high_zip, Newark$kfr_pooled_pooled_p25, use = "complete.obs") # -0.1893304
+cor(Newark$share_black2010, Newark$kfr_pooled_pooled_p25, use = "complete.obs") #-0.7738769
 
  
  #not sure why it doesnt work lol
